@@ -1,0 +1,13 @@
+.DS_Store
+/_ReSharper.MyCommonLibrary/
+/Output/
+/TestOutput/
+/TestResults/
+_ReSharper*/
+*.ReSharper
+*.suo
+*.user
+*.csproj.user
+*.resharper.user
+*.cache
+obj

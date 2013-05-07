@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{DEE5E8A5-D459-4077-AF31-9F184A20BF79}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Infrastructure.CrossCutting.Web</RootNamespace>
+    <AssemblyName>Infrastructure.CrossCutting.Web</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Output\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Caching\PerRequestCacheManager.cs" />
+    <Compile Include="Class1.cs" />
+    <Compile Include="Core\Security\MyFormsPrincipal.cs" />
+    <Compile Include="Core\Security\UserInfo.cs" />
+    <Compile Include="Core\TypeFinder\WebAppTypeFinder.cs" />
+    <Compile Include="Declaration\BasePage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Declaration\RemotePost.cs" />
+    <Compile Include="Fakes\FakeHttpContext.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Fakes\FakeHttpRequest.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Fakes\FakeHttpResponse.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Fakes\FakeHttpSessionState.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Fakes\FakeIdentity.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Fakes\FakePrincipal.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Html\BBCodeHelper.cs" />
+    <Compile Include="Html\CodeFormatter\CLikeFormat.cs" />
+    <Compile Include="Html\CodeFormatter\CodeFormat.cs" />
+    <Compile Include="Html\CodeFormatter\CodeFormatHelper.cs" />
+    <Compile Include="Html\CodeFormatter\CSharpFormat.cs" />
+    <Compile Include="Html\CodeFormatter\HighlightOptions.cs" />
+    <Compile Include="Html\CodeFormatter\HtmlFormat.cs" />
+    <Compile Include="Html\CodeFormatter\JavaScriptFormat.cs" />
+    <Compile Include="Html\CodeFormatter\MshFormat.cs" />
+    <Compile Include="Html\CodeFormatter\SourceFormat.cs" />
+    <Compile Include="Html\CodeFormatter\TsqlFormat.cs" />
+    <Compile Include="Html\CodeFormatter\VisualBasicFormat.cs" />
+    <Compile Include="Html\HtmlHelper.cs" />
+    <Compile Include="Html\ResolveLinksHelper.cs" />
+    <Compile Include="IO\FileSystemSettings.cs" />
+    <Compile Include="IO\FileSystemStorageProvider.cs" />
+    <Compile Include="IO\IStorageFile.cs" />
+    <Compile Include="IO\IStorageFolder.cs" />
+    <Compile Include="IO\IStorageProvider.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\Messages.Designer.cs">
+      <DependentUpon>Messages.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Utility\CommomHelper\CookieHelper.cs" />
+    <Compile Include="Utility\CommomHelper\IWebHelper.cs" />
+    <Compile Include="Utility\CommomHelper\JavaScriptHelper.cs" />
+    <Compile Include="Utility\CommomHelper\NetHelper.cs" />
+    <Compile Include="Utility\CommomHelper\WebHelper.cs" />
+    <Compile Include="Utility\SessionManage.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Messages.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Messages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Infrastructure.Crosscutting\Infrastructure.Crosscutting.csproj">
+      <Project>{106C7F00-C03F-4E29-87AF-ACD1BA292078}</Project>
+      <Name>Infrastructure.Crosscutting</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Fakes\ReadMe.txt" />
+    <Content Include="Html\CodeFormatter\0_ReadMe.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,187 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{106C7F00-C03F-4E29-87AF-ACD1BA292078}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Infrastructure.Crosscutting</RootNamespace>
+    <AssemblyName>Infrastructure.Crosscutting</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Output\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>ExtendedDesignGuidelineRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Adapters\ITypeAdapter.cs" />
+    <Compile Include="Adapters\TypeAdapter.cs" />
+    <Compile Include="Adapters\TypeMapConfiguration.cs" />
+    <Compile Include="Adapters\TypeMapConfigurationBase.cs" />
+    <Compile Include="Adapters\RegisterTypesMap.cs" />
+    <Compile Include="Adapters\ITypeMapConfigurationBase.cs" />
+    <Compile Include="Caching\Extensions.cs" />
+    <Compile Include="Caching\ICacheManager.cs" />
+    <Compile Include="Caching\MemoryCacheManager.cs" />
+    <Compile Include="Caching\NullCache.cs" />
+    <Compile Include="ComponentModel\GenericListTypeConverter.cs" />
+    <Compile Include="ComponentModel\WriteLockDisposable.cs" />
+    <Compile Include="Configuration\IConfigurationProvider.cs" />
+    <Compile Include="Configuration\ISettings.cs" />
+    <Compile Include="Configuration\NopConfig.cs" />
+    <Compile Include="Core\EngineContext.cs" />
+    <Compile Include="Core\IEngine.cs" />
+    <Compile Include="Core\Singleton.cs" />
+    <Compile Include="Core\TypeFinder\AppDomainTypeFinder.cs" />
+    <Compile Include="Core\TypeFinder\ITypeFinder.cs" />
+    <Compile Include="Cryptography\Crypto.cs" />
+    <Compile Include="Cryptography\CryptoConfig.cs" />
+    <Compile Include="Cryptography\CryptogSym.cs" />
+    <Compile Include="Cryptography\CryptoHash.cs" />
+    <Compile Include="Cryptography\CryptoHelper.cs" />
+    <Compile Include="Cryptography\ICrypto.cs" />
+    <Compile Include="Declaration\ChineseLunisolar.cs" />
+    <Compile Include="Declaration\CommomConst.cs" />
+    <Compile Include="Declaration\Enums.cs" />
+    <Compile Include="Declaration\GenericComparer.cs" />
+    <Compile Include="Declaration\GenericEqualityComparer.cs" />
+    <Compile Include="Declaration\IPagedList.cs" />
+    <Compile Include="Declaration\NameId.cs" />
+    <Compile Include="Declaration\NameValue.cs" />
+    <Compile Include="Declaration\ObjectExtendMethod.cs" />
+    <Compile Include="Declaration\PagedList.cs" />
+    <Compile Include="Declaration\PageParam.cs" />
+    <Compile Include="Exceptions\MyException.cs" />
+    <Compile Include="IoC\IInstanceLocator.cs" />
+    <Compile Include="IoC\InstanceLocator.cs" />
+    <Compile Include="License\LicenseKey.cs" />
+    <Compile Include="Logging\ILoggerFactory.cs" />
+    <Compile Include="Logging\LoggerFactory.cs" />
+    <Compile Include="Properties\GlobalSuppressions.cs" />
+    <Compile Include="Logging\ILogger.cs" />
+    <Compile Include="Resources\Messages.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Messages.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tasks\IStartupTask.cs" />
+    <Compile Include="Tasks\ITask.cs" />
+    <Compile Include="Tasks\Task.cs" />
+    <Compile Include="Tasks\TaskManager.cs" />
+    <Compile Include="Tasks\TaskThread.cs" />
+    <Compile Include="Utility\CodeTimer.cs" />
+    <Compile Include="Utility\CommomHelper\ExcelHelper.Static.cs" />
+    <Compile Include="Utility\CommomHelper\ExcelHelper.cs" />
+    <Compile Include="Utility\CommomHelper\FileHelper.cs" />
+    <Compile Include="Utility\CommomHelper\HttpHelper.cs" />
+    <Compile Include="Utility\CommomHelper\HttpsHelper.cs" />
+    <Compile Include="Utility\CommomHelper\ObjectHelper.cs" />
+    <Compile Include="Utility\CommomHelper\OleDbHelper.cs" />
+    <Compile Include="Utility\CommomHelper\PicDealHelper.cs" />
+    <Compile Include="Utility\CommomHelper\PinyinHelper.cs" />
+    <Compile Include="Utility\CommomHelper\RegHelper.cs" />
+    <Compile Include="Utility\CommomHelper\RmbHelper.cs" />
+    <Compile Include="Utility\CommomHelper\SerializeHelper.cs" />
+    <Compile Include="Utility\CommomHelper\SqlHelper.cs" />
+    <Compile Include="Utility\CommomHelper\TextHelper.cs" />
+    <Compile Include="Utility\CommomHelper\TimeHelper.cs" />
+    <Compile Include="Utility\CommomHelper\XmlHelper.cs" />
+    <Compile Include="Utility\CustomAttribute\LocalizableDescriptionAttribute.cs" />
+    <Compile Include="Utility\Util.cs" />
+    <Compile Include="Validator\BaseClasses\BaseAttribute.cs" />
+    <Compile Include="Validator\BaseClasses\Rule.cs" />
+    <Compile Include="Validator\EntityValidatorFactory.cs" />
+    <Compile Include="Validator\Exceptions\NotValid.cs" />
+    <Compile Include="Validator\IEntityValidator.cs" />
+    <Compile Include="Validator\IEntityValidatorFactory.cs" />
+    <Compile Include="Validator\Interfaces\IRule.cs" />
+    <Compile Include="Validator\Interfaces\IValidator.cs" />
+    <Compile Include="Validator\Rules\Between.cs" />
+    <Compile Include="Validator\Rules\Cascade.cs" />
+    <Compile Include="Validator\Rules\Contains.cs" />
+    <Compile Include="Validator\Rules\Custom.cs" />
+    <Compile Include="Validator\Rules\DoesNotContain.cs" />
+    <Compile Include="Validator\Rules\Empty.cs" />
+    <Compile Include="Validator\Rules\Equal.cs" />
+    <Compile Include="Validator\Rules\GreaterThan.cs" />
+    <Compile Include="Validator\Rules\GreaterThanOrEqual.cs" />
+    <Compile Include="Validator\Rules\IsDomain.cs" />
+    <Compile Include="Validator\Rules\IsEmailAddress.cs" />
+    <Compile Include="Validator\Rules\LessThan.cs" />
+    <Compile Include="Validator\Rules\LessThanOrEqual.cs" />
+    <Compile Include="Validator\Rules\MaxLength.cs" />
+    <Compile Include="Validator\Rules\MinLength.cs" />
+    <Compile Include="Validator\Rules\NotBetween.cs" />
+    <Compile Include="Validator\Rules\NotEmpty.cs" />
+    <Compile Include="Validator\Rules\NotEqual.cs" />
+    <Compile Include="Validator\Rules\NotNaN.cs" />
+    <Compile Include="Validator\Rules\NotRegex.cs" />
+    <Compile Include="Validator\Rules\Regex.cs" />
+    <Compile Include="Validator\Rules\Required.cs" />
+    <Compile Include="Validator\Rules\RequiredString.cs" />
+    <Compile Include="Validator\ValidationManager.cs" />
+    <Compile Include="Validator\Validator.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Messages.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Messages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DesignNotes.txt" />
+    <Content Include="Tasks\0_ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
