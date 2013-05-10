@@ -15,6 +15,7 @@ using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.Security;
+using System.Threading;
 
 namespace Infrastructure.Crosscutting.Logging.TraceSource
 {
@@ -60,7 +61,7 @@ namespace Infrastructure.Crosscutting.Logging.TraceSource
             {
                 try
                 {
-                    source.TraceEvent(eventType, (int)eventType, message);
+                    source.TraceEvent(eventType, (int)eventType, string.Format("{0}||thread:{1}| -【{2}】", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff "), Thread.CurrentThread.ManagedThreadId.ToString(), message));
                 }
                 catch (SecurityException)
                 {
