@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1-Layers", "1-Layers", "{4FDFAFD6-0002-4858-8DE8-B6CF9B23CFB4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.1-Infrastructure", "1.1-Infrastructure", "{3DDFB2F3-C110-4F23-8A41-1EED592AAA69}"
@@ -93,6 +93,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.Crosscutting.Updater", "Infrastructure.Crosscutting.Updater\Infrastructure.Crosscutting.Updater.csproj", "{21A701D7-063B-48E9-AE2F-5586A954B830}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.Crosscutting.Updater.Generator", "Infrastructure.Crosscutting.Updater.Generator\Infrastructure.Crosscutting.Updater.Generator.csproj", "{8B5CD550-1566-417C-8180-AA0F57AFE979}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.CrossCutting.IoC.Ninject", "Infrastructure.CrossCutting.IoC.Ninject\Infrastructure.CrossCutting.IoC.Ninject.csproj", "{1C8CA404-AAD7-4AB9-9497-D7FE5FF5F171}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -324,6 +326,16 @@ Global
 		{8B5CD550-1566-417C-8180-AA0F57AFE979}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{8B5CD550-1566-417C-8180-AA0F57AFE979}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{8B5CD550-1566-417C-8180-AA0F57AFE979}.Release|x86.ActiveCfg = Release|Any CPU
+		{1C8CA404-AAD7-4AB9-9497-D7FE5FF5F171}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C8CA404-AAD7-4AB9-9497-D7FE5FF5F171}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C8CA404-AAD7-4AB9-9497-D7FE5FF5F171}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{1C8CA404-AAD7-4AB9-9497-D7FE5FF5F171}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{1C8CA404-AAD7-4AB9-9497-D7FE5FF5F171}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1C8CA404-AAD7-4AB9-9497-D7FE5FF5F171}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C8CA404-AAD7-4AB9-9497-D7FE5FF5F171}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C8CA404-AAD7-4AB9-9497-D7FE5FF5F171}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{1C8CA404-AAD7-4AB9-9497-D7FE5FF5F171}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{1C8CA404-AAD7-4AB9-9497-D7FE5FF5F171}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -341,6 +353,7 @@ Global
 		{81CAB7AA-5235-42DB-82E6-2B4A0A1F9987} = {51362487-633E-4E00-A5D4-61C7208C60E7}
 		{4C9F89CE-4D69-4CC9-B8AB-602CC69D1549} = {51362487-633E-4E00-A5D4-61C7208C60E7}
 		{F51155B4-3B3C-4061-BC70-980045513CF2} = {51362487-633E-4E00-A5D4-61C7208C60E7}
+		{1C8CA404-AAD7-4AB9-9497-D7FE5FF5F171} = {51362487-633E-4E00-A5D4-61C7208C60E7}
 		{04E88768-E790-4D06-B2D9-43595B4AEA1B} = {1ADC78DC-FB84-44D3-BE5E-EA5827C9E423}
 		{3060CE7A-406F-4488-BA8D-94E62E0A1671} = {1ADC78DC-FB84-44D3-BE5E-EA5827C9E423}
 		{B1BF9FF8-A09D-4B45-A0ED-CC7EAF4DA1A3} = {71F6074F-00FF-4A1D-877C-42B4648C4274}
