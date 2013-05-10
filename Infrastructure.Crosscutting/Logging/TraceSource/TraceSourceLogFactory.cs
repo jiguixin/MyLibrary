@@ -11,9 +11,9 @@
 //===================================================================================
 
 
-using Infrastructure.Crosscutting.Logging;
+using System.Diagnostics;
 
-namespace Infrastructure.Crosscutting.NetFramework.Logging.TraceSource
+namespace Infrastructure.Crosscutting.Logging.TraceSource
 {
     /// <summary>
     /// A Trace Source base, log factory
@@ -21,13 +21,25 @@ namespace Infrastructure.Crosscutting.NetFramework.Logging.TraceSource
     public class TraceSourceLogFactory
         :ILoggerFactory
     {
+        private TraceListener tracListener;
+
+
+        public TraceSourceLogFactory()
+        {
+        }
+
+        public TraceSourceLogFactory(TraceListener listener)
+        {
+            tracListener = listener;
+        }
+
         /// <summary>
         /// Create the trace source log
         /// </summary>
         /// <returns>New ILog based on Trace Source infrastructure</returns>
         public ILogger Create()
         {
-            return new TraceSourceProvider();
+            return new TraceSourceProvider(tracListener ?? null);
         }
     }
 }

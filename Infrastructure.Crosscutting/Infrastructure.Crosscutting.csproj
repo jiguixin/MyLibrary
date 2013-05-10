@@ -99,6 +99,8 @@
     <Compile Include="License\LicenseKey.cs" />
     <Compile Include="Logging\ILoggerFactory.cs" />
     <Compile Include="Logging\LoggerFactory.cs" />
+    <Compile Include="Logging\TraceSource\TraceSourceLogFactory.cs" />
+    <Compile Include="Logging\TraceSource\TraceSourceProvider.cs" />
     <Compile Include="Properties\GlobalSuppressions.cs" />
     <Compile Include="Logging\ILogger.cs" />
     <Compile Include="Resources\Messages.Designer.cs">
@@ -173,6 +175,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="DesignNotes.txt" />
+    <Content Include="Logging\TraceSource\ReadMe.txt" />
     <Content Include="Tasks\0_ReadMe.txt" />
   </ItemGroup>
   <ItemGroup />

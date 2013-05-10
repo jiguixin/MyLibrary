@@ -15,9 +15,8 @@ using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.Security;
-using Infrastructure.Crosscutting.Logging;
 
-namespace Infrastructure.Crosscutting.NetFramework.Logging.TraceSource
+namespace Infrastructure.Crosscutting.Logging.TraceSource
 {
     /// <summary>
     /// Implementation of contract <see cref="Infrastructure.Crosscutting.Logging.ILogger"/>
@@ -37,10 +36,12 @@ namespace Infrastructure.Crosscutting.NetFramework.Logging.TraceSource
         /// <summary>
         /// Create a new instance of this trace manager
         /// </summary>
-        public TraceSourceProvider()
+        public TraceSourceProvider(TraceListener listener)
         {
             // Create default source
-            source = new System.Diagnostics.TraceSource("NLayerApp");
+            source = new System.Diagnostics.TraceSource("TraceSourceApp", SourceLevels.All); 
+            if (listener != null)
+                source.Listeners.Add(listener);
         }
 
         #endregion

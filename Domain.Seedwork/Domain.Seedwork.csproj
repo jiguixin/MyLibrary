@@ -67,6 +67,7 @@
     <Compile Include="DomainModel\ValidationError.cs" />
     <Compile Include="DomainModel\ValueObject.cs" />
     <Compile Include="Entity.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IdentityGenerator.cs">
       <SubType>Code</SubType>
     </Compile>

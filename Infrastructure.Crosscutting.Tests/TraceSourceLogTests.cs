@@ -11,7 +11,9 @@
 //===================================================================================
 
 
-using Infrastructure.Crosscutting.NetFramework.Logging.TraceSource;
+using System.Diagnostics;
+using Infrastructure.Crosscutting.Logging.TraceSource;
+using NUnit.Framework;
 
 namespace Infrastructure.Crosscutting.Tests
 {
@@ -20,21 +22,23 @@ namespace Infrastructure.Crosscutting.Tests
     using Infrastructure.Crosscutting.Logging;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-    [TestClass]
+    [TestFixture]
     public partial class TraceSourceLogTest
     {
         #region Class Initialize
 
-        [ClassInitialize()]
-        public static void ClassInitialze(TestContext context)
+       [SetUp]
+        public static void ClassInitialze()
         {
+            TextWriterTraceListener tr1 = new TextWriterTraceListener(System.Console.Out); 
             // Initialize default log factory
+           // LoggerFactory.SetCurrent(new TraceSourceLogFactory(tr1));
             LoggerFactory.SetCurrent(new TraceSourceLogFactory());
         }
 
         #endregion
 
-        [TestMethod()]
+        [Test]
         public void LogInfo()
         {
             //Arrange
@@ -43,7 +47,7 @@ namespace Infrastructure.Crosscutting.Tests
             //Act
             log.LogInfo("{0}","the info message"); 
         }
-        [TestMethod()]
+        [Test]
         public void LogWarning()
         {
             //Arrange
@@ -52,7 +56,7 @@ namespace Infrastructure.Crosscutting.Tests
             //Act
             log.LogWarning("{0}","the warning message");
         }
-        [TestMethod()]
+        [Test]
         public void LogError()
         {
             //Arrange
@@ -61,8 +65,8 @@ namespace Infrastructure.Crosscutting.Tests
             //Act
             log.LogError("{0}", "the error message"); 
         }
-            
-        [TestMethod()]
+
+        [Test]
         public void LogErrorWithException()
         {
             //Arrange
