@@ -46,6 +46,11 @@ namespace Infrastructure.Crosscutting.IoC
             currentLocator.RegisterType(type);
         }
 
+        public void RegisterInstance<T>(T t)
+        {
+            currentLocator.RegisterInstance<T>(t);
+        }
+
         public bool IsTypeRegistered<T>()
         {
             return currentLocator.IsTypeRegistered<T>();

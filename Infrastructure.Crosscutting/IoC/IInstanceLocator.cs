@@ -10,5 +10,6 @@ namespace Infrastructure.Crosscutting.IoC
         bool IsTypeRegistered(Type type);
         void RegisterType<T>();
         void RegisterType(Type type);
+        void RegisterInstance<T>(T t);
     }
 }

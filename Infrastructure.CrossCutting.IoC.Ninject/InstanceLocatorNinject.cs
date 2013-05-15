@@ -45,5 +45,17 @@ namespace Infrastructure.CrossCutting.IoC.Ninject
         {
             kernel.Bind(type);
         }
+
+        public void RegisterInstance<T>(T t)
+        {
+            if (kernel.Get<T>() == null)
+            {
+                kernel.Bind<T>().ToConstant(t);
+            }
+            else
+            {
+                kernel.Rebind<T>().ToConstant(t);
+            }
+        }
     }
 }
