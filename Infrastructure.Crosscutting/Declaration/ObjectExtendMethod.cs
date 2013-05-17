@@ -36,6 +36,23 @@ namespace Infrastructure.Crosscutting.Declaration
                 return default(int);
             }
         }
+
+        /// <summary>
+        /// 将一个对象转化为Int型数据，为空时时返回0
+        /// </summary>
+        /// <param name="obj">要转化为Int型数据的对象</param>
+        /// <returns>Int型数据，若转化失败返回0</returns>
+        public static long ToLong(this object obj)
+        {
+            try
+            {
+                return Convert.ToInt64(obj);
+            }
+            catch
+            {
+                return default(long);
+            }
+        }
          
         /// <summary>
         /// 将一个对象转化为日期型数据
