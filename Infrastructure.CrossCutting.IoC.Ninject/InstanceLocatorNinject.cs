@@ -21,6 +21,11 @@ namespace Infrastructure.CrossCutting.IoC.Ninject
             return kernel.Get<T>();
         }
 
+        public T GetInstance<T>(string name) where T : class
+        {
+            return kernel.Get<T>(name);
+        }
+
         public object GetInstance(Type instanceType)
         {
             return kernel.Get(instanceType);

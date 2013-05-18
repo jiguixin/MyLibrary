@@ -31,6 +31,11 @@ namespace Infrastructure.Crosscutting.IoC
             return Current.GetInstance<T>();
         }
 
+        public T GetInstance<T>(string name) where T : class
+        {
+            return Current.GetInstance<T>(name);
+        }
+
         public object GetInstance(Type instanceType)
         {
             return Current.GetInstance(instanceType);
