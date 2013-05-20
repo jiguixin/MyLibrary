@@ -565,12 +565,13 @@ namespace Infrastructure.Crosscutting.Declaration
         }
 
         /// <summary>
-        /// 将指定类型的列表转换为以逗号分开的字符串，如（"1,2,3"）
+        /// 将指定类型的列表转换为以逗号分开的字符串，默认是“，”号分割, 结果,如 "1,2,3" 
         /// </summary>
         /// <typeparam name="TSource"></typeparam>
         /// <param name="sources"></param>
+        /// <param name="separator">指定分割符</param>
         /// <returns></returns>
-        public static string ToColumnString<TSource>(this IEnumerable<TSource> sources)
+        public static string ToColumnString<TSource>(this IEnumerable<TSource> sources, string separator =",")
         {
             try
             {
@@ -579,7 +580,7 @@ namespace Infrastructure.Crosscutting.Declaration
                 foreach (var content in sources)
                 {
                     if (sb.Length > 0)
-                        sb.Append(CommomConst.COMMA);
+                        sb.Append(separator);
 
                     sb.Append(content);
                 }
