@@ -133,6 +133,7 @@
     <Compile Include="Utility\CommomHelper\XmlHelper.cs" />
     <Compile Include="Utility\CustomAttribute\LocalizableDescriptionAttribute.cs" />
     <Compile Include="Utility\Util.cs" />
+    <Compile Include="Utility\WindowsApiHelper.cs" />
     <Compile Include="Validator\BaseClasses\BaseAttribute.cs" />
     <Compile Include="Validator\BaseClasses\Rule.cs" />
     <Compile Include="Validator\EntityValidatorFactory.cs" />
