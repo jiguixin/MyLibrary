@@ -522,7 +522,7 @@ namespace Infrastructure.Crosscutting.Declaration
         /// <param name="format"></param>
         /// <param name="args"></param>
         /// <returns></returns>
-        public static String Format(this String format, params object[] args)
+        public static string StringFormat(this string format, params object[] args)
         {
             if (format == null || args == null)
                 throw new ArgumentNullException((format == null) ? "format" : "args");
