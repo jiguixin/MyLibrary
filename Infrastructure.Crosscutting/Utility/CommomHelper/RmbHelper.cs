@@ -133,5 +133,6 @@ namespace Infrastructure.Crosscutting.Utility.CommomHelper
 			}
 			return result;
 		}
+         
 	}
 }

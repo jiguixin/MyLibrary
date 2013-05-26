@@ -456,8 +456,11 @@ namespace Infrastructure.Crosscutting.Declaration
             return sqlText;
         }
 
+        //提取数字的正则表达式
+        private const string RegNumberStr = @"[+-]?\d+[\.]?\d*";
+          
         /// <summary>
-        /// 在字符串中提取数值
+        /// 在字符串中提取最后一个数值
         /// </summary>
         /// <param name="str">传入的字符串</param>
         /// <returns></returns>
@@ -466,15 +469,46 @@ namespace Infrastructure.Crosscutting.Declaration
             decimal result = 0;
             if (!string.IsNullOrEmpty(str))
             {
-                // 正则表达式剔除非数字字符（不包含小数点.） 
-                str = Regex.Replace(str, @"[^\d.\d]", " ");
-                // 如果是数字，则转换为decimal类型 
-                if (Regex.IsMatch(str, @"^[+-]?\d*[.]?\d*$"))
+                MatchCollection mc = Regex.Matches(str, RegNumberStr);
+
+                int i = mc.Count;
+
+                if (i > 0)
                 {
-                    result = decimal.Parse(str);
+                    return mc[i - 1].Groups[0].Value.ToDecimal();
                 }
+                else
+                {
+                    return 0;
+                } 
             }
             return result; 
+        }
+
+        /// <summary>
+        /// 在字符串中提取最后一个数值
+        /// </summary>
+        /// <param name="str">传入的字符串</param>
+        /// <returns></returns>
+        public static double GetNumberDouble(this string str)
+        {
+            double result = 0;
+            if (!string.IsNullOrEmpty(str))
+            {
+                MatchCollection mc = Regex.Matches(str, RegNumberStr);
+
+                int i = mc.Count;
+
+                if (i > 0)
+                {
+                    return mc[i - 1].Groups[0].Value.ToDouble();
+                }
+                else
+                {
+                    return 0;
+                } 
+            }
+            return result;
         }
 
         /// <summary>
@@ -490,13 +524,15 @@ namespace Infrastructure.Crosscutting.Declaration
             if (!string.IsNullOrEmpty(str))
             {
                 // 正则表达式剔除非数字字符（不包含小数点.） 
-                result = Regex.Replace(str, @"[^\d.\d]", " ");                  
+                result = Regex.Replace(str, @"[^\d.\d]", " ").Trim();                  
             }
             return result;
         }
 
+        
+
         /// <summary>
-        /// 在字符串中提取整型
+        /// 在字符串中提取最后一个整型
         /// </summary>
         /// <param name="str">传入的字符串</param>
         /// <returns></returns>
@@ -505,13 +541,18 @@ namespace Infrastructure.Crosscutting.Declaration
             int result = 0;
             if (!string.IsNullOrEmpty(str))
             {
-                // 正则表达式剔除非数字字符（不包含小数点.） 
-                str = Regex.Replace(str, @"[^\d\d]", " ");
-                // 如果是数字，则转换为decimal类型 
-                if (Regex.IsMatch(str, @"^[+-]?\d*[.]?\d*$"))
+                MatchCollection mc = Regex.Matches(str, RegNumberStr, RegexOptions.Compiled);
+                 
+                int i = mc.Count;
+
+                if (i > 0)
                 {
-                    result = int.Parse(str);
+                    return mc[i - 1].Groups[0].Value.ToInt32(); 
                 }
+                else
+                {
+                    return 0;
+                } 
             }
             return result; 
         }

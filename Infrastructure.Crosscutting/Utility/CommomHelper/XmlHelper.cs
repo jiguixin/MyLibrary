@@ -78,7 +78,7 @@ namespace Infrastructure.Crosscutting.Utility.CommomHelper
             var sb = new StringBuilder(str);
             return
                 sb.Replace("&quot;", "\"").Replace("&apos;", "'").Replace("&lt;", "<").Replace("&gt;", ">").Replace(
-                    "&amp;", "&").ToString();
+                    "&amp;", "&").Replace("&yen;","￥").ToString();
         }
 
         /// <summary>

@@ -17,8 +17,8 @@ namespace Infrastructure.Crosscutting.Utility.CommomHelper
         #region Fileds
         private string _excelObject = "Provider=Microsoft.{0}.OLEDB.{1};Data Source={2};Extended Properties=\"Excel {3};HDR={4};IMEX={5}\"";
         private string _filepath = string.Empty;
-        private string _hdr = "No";
-        private string _imex = "1";
+        private string _hdr = "No";  //HDR=YES 表示将sheet的第一行作为列名，所以我们默认excel的首行是列名。
+        private string _imex = "1"; //IMEX=1 表示大致的意思是使用导入的模式，把数字也作为字符串来操作,如果在创建表时就需要把他设置为 '0'
         private OleDbConnection _con;
         #endregion
 
@@ -134,7 +134,7 @@ namespace Infrastructure.Crosscutting.Utility.CommomHelper
         /// <param name="tableName">Table Name</param>
         /// <param name="tableDefinition">Table Definition</param>
         public void WriteTable(string tableName, Dictionary<string, string> tableDefinition)
-        {
+        { 
             using (OleDbCommand cmd = new OleDbCommand(this.GenerateCreateTable(tableName, tableDefinition), this.Connection))
             {
                 if (this.Connection.State != ConnectionState.Open) this.Connection.Open();
