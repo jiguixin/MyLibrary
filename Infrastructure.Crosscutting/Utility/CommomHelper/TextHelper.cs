@@ -102,5 +102,14 @@ namespace Infrastructure.Crosscutting.Utility.CommomHelper
             return result;
         }
 
+        /// <summary>
+        /// 清除该字符最后的换行符
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static string TrimEndLf(string str)
+        {
+            return str.TrimEnd('\n', '\r');
+        }
     }
 }

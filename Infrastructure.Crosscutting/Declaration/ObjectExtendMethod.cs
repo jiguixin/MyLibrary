@@ -529,8 +529,6 @@ namespace Infrastructure.Crosscutting.Declaration
             return result;
         }
 
-        
-
         /// <summary>
         /// 在字符串中提取最后一个整型
         /// </summary>
