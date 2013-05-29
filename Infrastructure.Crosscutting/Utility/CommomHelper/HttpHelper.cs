@@ -119,7 +119,7 @@ namespace Infrastructure.Crosscutting.Utility.CommomHelper
         /// <param name="url"></param>
         /// <param name="encoding">返回字符串的编码方式，NULL为默认</param>
         /// <returns></returns>
-        public static string GETDataToUrl(string url,Encoding encoding)
+        public static string GETDataToUrl(string url,Encoding encoding = null)
         { 
             return GETDataToUrl(url, null, null, encoding);
         }
