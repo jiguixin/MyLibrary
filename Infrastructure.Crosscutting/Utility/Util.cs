@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Diagnostics;
 using System;
 using System.ComponentModel;
+using Infrastructure.Crosscutting.Declaration;
 
 namespace Infrastructure.Crosscutting.Utility
 {
@@ -66,7 +67,7 @@ namespace Infrastructure.Crosscutting.Utility
         {
             // 只有表中包含这个列，我们才取值，不然就返回类型的默认值
             if (dr.Table.Columns.Contains(colName) && dr[colName] != DBNull.Value)
-                return (T)dr[colName];
+                return dr[colName].ToType<T>();// 以前为，(T)dr[colName];因为发现报错,将其调整
 
             return default(T);
         }

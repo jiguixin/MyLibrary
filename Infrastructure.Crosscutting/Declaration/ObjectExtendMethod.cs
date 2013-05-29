@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
@@ -122,7 +123,26 @@ namespace Infrastructure.Crosscutting.Declaration
                 return default(double);
             }
         }
-         
+
+        /// <summary>
+        /// 将一个对象转换为指定类型
+        /// </summary>
+        /// <typeparam name="T">目标类型</typeparam>
+        /// <param name="source">对象源</param>
+        /// <returns>具体类型</returns>
+        public static T ToType<T>(this object source)
+        {
+            try
+            {
+                return (T)Convert.ChangeType(source, typeof(T), CultureInfo.InvariantCulture);
+            }
+            catch
+            {
+                return default(T);
+            }
+        }
+
+
         /// <summary>
         /// 反序列化
         ///  先将数据库中取出的对象反序强制转化为byte数组，再反序列化为对象
