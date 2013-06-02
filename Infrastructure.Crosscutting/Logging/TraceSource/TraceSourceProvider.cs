@@ -28,7 +28,7 @@ namespace Infrastructure.Crosscutting.Logging.TraceSource
     {
         #region Members
 
-        System.Diagnostics.TraceSource source;
+        public static System.Diagnostics.TraceSource Source = new System.Diagnostics.TraceSource("TraceSourceApp", SourceLevels.All); 
 
         #endregion
 
@@ -40,9 +40,9 @@ namespace Infrastructure.Crosscutting.Logging.TraceSource
         public TraceSourceProvider(TraceListener listener)
         {
             // Create default source
-            source = new System.Diagnostics.TraceSource("TraceSourceApp", SourceLevels.All); 
+           // source = new System.Diagnostics.TraceSource("TraceSourceApp", SourceLevels.All); 
             if (listener != null)
-                source.Listeners.Add(listener);
+                Source.Listeners.Add(listener);
         }
 
         #endregion
@@ -57,11 +57,11 @@ namespace Infrastructure.Crosscutting.Logging.TraceSource
         void TraceInternal(TraceEventType eventType, string message)
         {
 
-            if (source != null)
+            if (Source != null)
             {
                 try
                 {
-                    source.TraceEvent(eventType, (int)eventType, string.Format("{0}||thread:{1}| -【{2}】", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff "), Thread.CurrentThread.ManagedThreadId.ToString(), message));
+                    Source.TraceEvent(eventType, (int)eventType, string.Format("{0}||thread:{1}| -【{2}】", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff "), Thread.CurrentThread.ManagedThreadId.ToString(), message));
                 }
                 catch (SecurityException)
                 {
