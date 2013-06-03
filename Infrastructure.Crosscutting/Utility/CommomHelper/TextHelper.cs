@@ -102,7 +102,62 @@ namespace Infrastructure.Crosscutting.Utility.CommomHelper
             return result;
         }
 
+        //把字母,数字由半角转化为全角
         /// <summary>
+        /// 把字母,数字由半角转化为全角
+        /// </summary>
+        /// <param name="str">原始字符串</param>
+        /// <returns>全角字符串</returns>
+        public static string ChangeStrToSBC(string str)
+        {
+            char[] c = str.ToCharArray();
+            for (int i = 0; i < c.Length; i++)
+            {
+                byte[] b = System.Text.Encoding.Unicode.GetBytes(c, i, 1);
+                if (b.Length == 2)
+                {
+                    if (b[1] == 0)
+                    {
+                        b[0] = (byte)(b[0] - 32);
+                        b[1] = 255;
+                        c[i] = System.Text.Encoding.Unicode.GetChars(b)[0];
+                    }
+                }
+            }
+            //半角  
+            string strNew = new string(c);
+            return strNew;
+        }
+
+        //将字母，数字由全角转化为半角
+        /// <summary>
+        /// 将字母，数字由全角转化为半角
+        /// </summary>
+        /// <param name="str">原始字符串</param>
+        /// <returns>半角字符串</returns>
+        public static string ChangeStrToDBC(string str)
+        {
+            string s = str;
+            char[] c = s.ToCharArray();
+            for (int i = 0; i < c.Length; i++)
+            {
+                byte[] b = System.Text.Encoding.Unicode.GetBytes(c, i, 1);
+                if (b.Length == 2)
+                {
+                    if (b[1] == 255)
+                    {
+                        b[0] = (byte)(b[0] + 32);
+                        b[1] = 0;
+                        c[i] = System.Text.Encoding.Unicode.GetChars(b)[0];
+                    }
+                }
+            }
+            //半角  
+            string news = new string(c);
+            return news;
+        }
+         
+         /// <summary>
         /// 清除该字符最后的换行符
         /// </summary>
         /// <param name="str"></param>
