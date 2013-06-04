@@ -102,59 +102,90 @@ namespace Infrastructure.Crosscutting.Utility.CommomHelper
             return result;
         }
 
-        //把字母,数字由半角转化为全角
         /// <summary>
-        /// 把字母,数字由半角转化为全角
+        /// 将英文标点转为中文标点
         /// </summary>
-        /// <param name="str">原始字符串</param>
-        /// <returns>全角字符串</returns>
-        public static string ChangeStrToSBC(string str)
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public static string ToCnInterpunction(string input)
         {
-            char[] c = str.ToCharArray();
-            for (int i = 0; i < c.Length; i++)
-            {
-                byte[] b = System.Text.Encoding.Unicode.GetBytes(c, i, 1);
-                if (b.Length == 2)
-                {
-                    if (b[1] == 0)
-                    {
-                        b[0] = (byte)(b[0] - 32);
-                        b[1] = 255;
-                        c[i] = System.Text.Encoding.Unicode.GetChars(b)[0];
-                    }
-                }
-            }
-            //半角  
-            string strNew = new string(c);
-            return strNew;
+            return input.Replace('\'', '’')
+                        .Replace('"', '“')
+                        .Replace(',', '，')
+                        .Replace('.', '。')
+                        .Replace('!', '！')
+                        .Replace('(', '（')
+                        .Replace(')', '）')
+                        .Replace(';', '；');
         }
 
-        //将字母，数字由全角转化为半角
         /// <summary>
-        /// 将字母，数字由全角转化为半角
+        /// 将中文标点转为英文标点
         /// </summary>
-        /// <param name="str">原始字符串</param>
-        /// <returns>半角字符串</returns>
-        public static string ChangeStrToDBC(string str)
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public static string ToEngInterpunction(string input)
         {
-            string s = str;
-            char[] c = s.ToCharArray();
+            return input.Replace('’', '\'')
+                        .Replace('“', '"')
+                        .Replace('”', '"')
+                        .Replace('，', ',')
+                        .Replace('。', '.')
+                        .Replace('！', '!')
+                        .Replace('（', '(')
+                        .Replace('）', ')')
+                        .Replace('；', ';');
+        }
+
+        /// 转全角的函数(SBC case)
+        ///
+        ///任意字符串
+        ///全角字符串
+        ///
+        ///全角空格为12288，半角空格为32
+        ///其他字符半角(33-126)与全角(65281-65374)的对应关系是：均相差65248
+        ///
+        public static String ToSBC(String input)
+        {
+            // 半角转全角：
+            char[] c = input.ToCharArray();
             for (int i = 0; i < c.Length; i++)
             {
-                byte[] b = System.Text.Encoding.Unicode.GetBytes(c, i, 1);
-                if (b.Length == 2)
+                if (c[i] == 32)
                 {
-                    if (b[1] == 255)
-                    {
-                        b[0] = (byte)(b[0] + 32);
-                        b[1] = 0;
-                        c[i] = System.Text.Encoding.Unicode.GetChars(b)[0];
-                    }
+                    c[i] = (char)12288;
+                    continue;
                 }
+                if (c[i] < 127)
+                    c[i] = (char)(c[i] + 65248);
             }
-            //半角  
-            string news = new string(c);
-            return news;
+            return new String(c);
+        }
+
+        /**/
+        // /
+        // / 转半角的函数(DBC case)
+        // /
+        // /任意字符串
+        // /半角字符串
+        // /
+        // /全角空格为12288，半角空格为32
+        // /其他字符半角(33-126)与全角(65281-65374)的对应关系是：均相差65248
+        // /
+        public static String ToDBC(String input)
+        {
+            char[] c = input.ToCharArray();
+            for (int i = 0; i < c.Length; i++)
+            {
+                if (c[i] == 12288)
+                {
+                    c[i] = (char)32;
+                    continue;
+                }
+                if (c[i] > 65280 && c[i] < 65375)
+                    c[i] = (char)(c[i] - 65248);
+            }
+            return new String(c);
         }
          
          /// <summary>
