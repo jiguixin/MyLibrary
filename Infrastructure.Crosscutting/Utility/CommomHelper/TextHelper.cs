@@ -89,12 +89,12 @@ namespace Infrastructure.Crosscutting.Utility.CommomHelper
                 return string.Join(",", items);
         }
 
-        public static T[] StringToArray<T>(string str)
+        public static T[] StringToArray<T>(string str, char separator = ',')
         {
             if (string.IsNullOrEmpty(str))
                 return null;
 
-            string[] arr = str.Split(CommomConst.COMMA);
+            string[] arr = str.Split(separator);
             T[] result = new T[arr.Length];
             for (int i = 0; i < arr.Length; i++)
                 result[i] = (T)Convert.ChangeType(arr[i], typeof(T));
