@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Infrastructure.Crosscutting.Declaration;
+using System.Text.RegularExpressions;
 
 namespace Infrastructure.Crosscutting.Utility.CommomHelper
 {
@@ -196,6 +197,33 @@ namespace Infrastructure.Crosscutting.Utility.CommomHelper
         public static string TrimEndLf(string str)
         {
             return str.TrimEnd('\n', '\r');
+        }
+
+        /// <summary>
+        /// 通过正则表达试得到字符串的中CSS样式
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public static List<string> GetCssContent(string source)
+        {
+            //匹配CSS文件中的CSS样式
+            var reg = @"[\.\#]?\w+[^{]+\{[^}]*\}";
+            var lstResult = new List<string>();
+            if (!string.IsNullOrEmpty(source))
+            {
+                var r = new Regex(reg); //定义一个Regex对象实例
+                var mc = r.Matches(source);
+                for (var i = 0; i < mc.Count; i++) //在输入字符串中找到所有匹配
+                {
+                    string val = mc[i].Value;
+
+                    if (val.IsNullOrEmpty())
+                        continue;
+
+                    lstResult.Add(val.Trim());
+                }
+            }
+            return lstResult;
         }
     }
 }
