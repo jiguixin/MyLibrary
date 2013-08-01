@@ -201,6 +201,16 @@ namespace Infrastructure.Crosscutting.Utility.CommomHelper
         }
 
         /// <summary>
+        /// 清空该字符串的空格和换行符
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public static string TrimLf(string source)
+        {
+            return source.Trim().Trim('\r', '\n');
+        }
+
+        /// <summary>
         /// 通过正则表达试得到字符串的中CSS样式
         /// </summary>
         /// <param name="source"></param>
