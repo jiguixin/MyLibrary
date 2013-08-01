@@ -241,7 +241,10 @@ namespace Infrastructure.Crosscutting.Utility.CommomHelper
         }
 
         /// <summary>  
-        /// 将Unicode编码转换为汉字字符串  
+        /// 将Unicode编码转换为汉字字符串,非Unicode会被清空
+        /// <remarks>
+        /// 如果要保留所有字符请调用<see cref="TextHelper.ToGb2312NotRemove"/>
+        /// </remarks>
         /// </summary>  
         /// <param name="str">Unicode编码字符串</param>  
         /// <returns>汉字字符串</returns>  
@@ -257,6 +260,62 @@ namespace Infrastructure.Crosscutting.Utility.CommomHelper
                 r += Encoding.Unicode.GetString(bts);
             }
             return r;
-        }  
+        }
+
+        /// <summary>  
+        /// 将Unicode编码转换为汉字字符串,非Unicode会被保留
+        /// </summary>  
+        /// <param name="str">Unicode编码字符串</param>  
+        /// <returns>汉字字符串</returns>  
+        public static string ToGb2312NotRemove(string str)
+        {
+            int charIdx = 0;
+            char[] chars = null;
+
+            chars = str.ToCharArray();
+
+            int charPos = chars.Length;
+            var sbBuffer = new StringBuilder();
+
+            while (charIdx < charPos)
+            {
+                char? c = null;
+                switch (c = chars[charIdx++])
+                {
+                    case '\\':
+                        int nextCharIdx = charIdx;
+
+                        char nextChar = chars[nextCharIdx];
+
+                        switch (nextChar)
+                        {
+                            case 'u':
+                                charIdx++; 
+                                var hexChar = ParseUnicode(chars, ref charIdx);
+                                sbBuffer.Append(hexChar);
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+                    default:
+                        sbBuffer.Append(c);
+                        break;
+                }
+            }
+            return sbBuffer.ToString();
+        }
+
+        private static char ParseUnicode(char[] chars, ref int charPos)
+        {
+            var hexValues = new string(chars, charPos, 4);
+            var hexChar =
+                Convert.ToChar(int.Parse(hexValues, NumberStyles.HexNumber,
+                                         NumberFormatInfo.InvariantInfo));
+
+            charPos += 4;
+            return hexChar;
+        }
+         
     }
 }
