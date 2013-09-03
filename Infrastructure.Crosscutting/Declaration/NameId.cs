@@ -92,7 +92,7 @@ namespace Infrastructure.Crosscutting.Declaration
 
             try
             {
-                ni.Id = sp[0].ToInt32();
+                ni.Id = sp[0].ToType<int>();
 
                 //循环数组，分别把后面的内容加到Name里面，防止Name中有冒号而造成的数组损坏
                 for (int i = 1; i < sp.Length; i++)
@@ -125,7 +125,7 @@ namespace Infrastructure.Crosscutting.Declaration
 
             try
             {
-                ni.Id = sp[0].ToInt32();
+                ni.Id = sp[0].ToType<int>();
                 //循环数组，分别把后面的内容加到Name里面，防止Name中有冒号而造成的数组损坏
                 for (int i = 1; i < sp.Length; i++)
                 {

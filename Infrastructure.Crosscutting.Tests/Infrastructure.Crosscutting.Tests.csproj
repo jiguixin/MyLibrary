@@ -82,6 +82,7 @@
   <ItemGroup>
     <Compile Include="AdapterTest\CustomerAppService.cs" />
     <Compile Include="CommonTest.cs" />
+    <Compile Include="Declaration\ObjectExtendMethodTest.cs" />
     <Compile Include="DTOAdapters\Maps\CustomerDTOToAddress.cs" />
     <Compile Include="DTOAdapters\Maps\CustomerToCustomerDTOMap.cs" />
     <Compile Include="DTOAdapters\Maps\CustomerDTOToCustomerMap.cs" />
@@ -109,7 +110,9 @@
     <Compile Include="ValidatorsTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

@@ -50,7 +50,7 @@ namespace Infrastructure.Crosscutting.Utility.CommomHelper
             string strDate = DateTime.Now.ToString("yyMMddHHmmss");
             string result = null;
 
-            if (!code.IsEmpty())
+            if (!code.IsEmptyString())
             {
                 code = code.Trim();
 

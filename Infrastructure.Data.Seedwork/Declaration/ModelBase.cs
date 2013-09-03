@@ -426,7 +426,7 @@ namespace Infrastructure.Data.Seedwork.Declaration
             if (dr.Table.Columns.Contains(dobColName) && dr[dobColName] != DBNull.Value
                 && dr.Table.Columns.Contains(calendarKindColName) && dr[calendarKindColName] != DBNull.Value)
             {
-                DateTime dob = dr[dobColName].ToDateTime();
+                DateTime dob = dr[dobColName].ToType<DateTime>();
                 CalendarKind k = (CalendarKind)dr[calendarKindColName];
 
                 // 可能没有年
@@ -493,7 +493,7 @@ namespace Infrastructure.Data.Seedwork.Declaration
         {
             int iVal = 0;
 
-            if (!string.IsNullOrEmpty(code) && code.IsNumberString())
+            if (!string.IsNullOrEmpty(code) && code.IsInt())
                 return int.TryParse(code, out iVal);
 
             return false;

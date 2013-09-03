@@ -468,7 +468,7 @@ namespace Infrastructure.Crosscutting.Utility.CommomHelper
                         //对日期屏蔽错误
                         if (parm.DbType == DbType.DateTime)
                         {
-                            DateTime datetime = parm.Value.ToDateTime();
+                            DateTime datetime = parm.Value.ToType<DateTime>();
                             if (datetime < new DateTime(1900, 1, 1))
                             {
                                 datetime = new DateTime(1900, 1, 1);

@@ -10,23 +10,24 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks; 
+using System.Threading.Tasks;
 using Infrastructure.Crosscutting.Utility.CommomHelper;
 
 namespace Infrastructure.Crosscutting.Declaration
 {
     /// <summary>
-    /// 封装一些对象的扩展方法
+    ///     封装一些对象的扩展方法
     /// </summary>
     public static class ObjectExtendMethod
     {
         #region 对象扩展方法
+
         /// <summary>
-        /// 将一个对象转化为Int型数据，为空时时返回0
+        ///     将一个对象转化为Int型数据，为空时时返回0
         /// </summary>
         /// <param name="obj">要转化为Int型数据的对象</param>
         /// <returns>Int型数据，若转化失败返回0</returns>
-        public static int ToInt32(this object obj)
+        public static int ToInt32(object obj)
         {
             try
             {
@@ -39,11 +40,11 @@ namespace Infrastructure.Crosscutting.Declaration
         }
 
         /// <summary>
-        /// 将一个对象转化为Int型数据，为空时时返回0
+        ///     将一个对象转化为Int型数据，为空时时返回0
         /// </summary>
         /// <param name="obj">要转化为Int型数据的对象</param>
         /// <returns>Int型数据，若转化失败返回0</returns>
-        public static long ToLong(this object obj)
+        public static long ToLong(object obj)
         {
             try
             {
@@ -54,13 +55,13 @@ namespace Infrastructure.Crosscutting.Declaration
                 return default(long);
             }
         }
-         
+
         /// <summary>
-        /// 将一个对象转化为日期型数据
+        ///     将一个对象转化为日期型数据
         /// </summary>
         /// <param name="obj">要进行转化的对象</param>
         /// <returns>返回时间型数据,若转化失败,则返回DateTime的默认值</returns>
-        public static DateTime ToDateTime(this object obj)
+        public static DateTime ToDateTime(object obj)
         {
             try
             {
@@ -68,17 +69,17 @@ namespace Infrastructure.Crosscutting.Declaration
             }
             catch
             {
-                return "1900-1-1".ToDateTime();
+                return ToType<DateTime>("1900-1-1");
                 //return default(DateTime);
             }
         }
-         
+
         /// <summary>
-        /// 将一个对象转化为逻辑性数据
+        ///     将一个对象转化为逻辑性数据
         /// </summary>
         /// <param name="obj">要进行转化的对象</param>
         /// <returns>返回布尔值,若转化失败,返回布尔型的默认值</returns>
-        public static bool ToBoolean(this object obj)
+        public static bool ToBoolean(object obj)
         {
             try
             {
@@ -91,11 +92,11 @@ namespace Infrastructure.Crosscutting.Declaration
         }
 
         /// <summary>
-        /// 将一个对象转化为实数类型
+        ///     将一个对象转化为实数类型
         /// </summary>
         /// <param name="obj">要进行转化的对象</param>
         /// <returns>返回实数类型,若转化失败,返回实数的默认值</returns>
-        public static decimal ToDecimal(this object obj)
+        public static decimal ToDecimal(object obj)
         {
             try
             {
@@ -108,11 +109,11 @@ namespace Infrastructure.Crosscutting.Declaration
         }
 
         /// <summary>
-        /// 转化为实数类型，发生异常时返回默认，而不报错
+        ///     转化为实数类型，发生异常时返回默认，而不报错
         /// </summary>
         /// <param name="obj">要进行转化的对象</param>
         /// <returns>返回实数类型,若转化失败,返回实数的默认值</returns>
-        public static double ToDouble(this object obj)
+        public static double ToDouble(object obj)
         {
             try
             {
@@ -125,7 +126,7 @@ namespace Infrastructure.Crosscutting.Declaration
         }
 
         /// <summary>
-        /// 将一个对象转换为指定类型
+        ///     将一个对象转换为指定类型
         /// </summary>
         /// <typeparam name="T">目标类型</typeparam>
         /// <param name="source">对象源</param>
@@ -134,18 +135,17 @@ namespace Infrastructure.Crosscutting.Declaration
         {
             try
             {
-                return (T)Convert.ChangeType(source, typeof(T), CultureInfo.InvariantCulture);
+                return (T) Convert.ChangeType(source, typeof (T), CultureInfo.InvariantCulture);
             }
             catch
             {
                 return default(T);
             }
         }
-
-
+         
         /// <summary>
-        /// 反序列化
-        ///  先将数据库中取出的对象反序强制转化为byte数组，再反序列化为对象
+        ///     反序列化
+        ///     先将数据库中取出的对象反序强制转化为byte数组，再反序列化为对象
         /// </summary>
         /// <param name="obj">要进行反序列化的对象</param>
         /// <returns>反序列化后生成的对象</returns>
@@ -153,7 +153,7 @@ namespace Infrastructure.Crosscutting.Declaration
         {
             try
             {
-                return SerializeHelper.Deserialize((byte[])obj);
+                return SerializeHelper.Deserialize((byte[]) obj);
             }
             catch
             {
@@ -162,7 +162,7 @@ namespace Infrastructure.Crosscutting.Declaration
         }
 
         /// <summary>
-        /// 序列话，将一个对象序列化为byte数组
+        ///     序列话，将一个对象序列化为byte数组
         /// </summary>
         /// <param name="obj">要进行序列化的对象</param>
         /// <returns>返回二进制数据</returns>
@@ -174,7 +174,7 @@ namespace Infrastructure.Crosscutting.Declaration
         #region IsNull
 
         /// <summary>
-        /// Determines if the object is null
+        ///     Determines if the object is null
         /// </summary>
         /// <param name="Object">The object to check</param>
         /// <returns>True if it is null, false otherwise</returns>
@@ -188,7 +188,7 @@ namespace Infrastructure.Crosscutting.Declaration
         #region IsNotNull
 
         /// <summary>
-        /// Determines if the object is not null
+        ///     Determines if the object is not null
         /// </summary>
         /// <param name="Object">The object to check</param>
         /// <returns>False if it is null, true otherwise</returns>
@@ -202,11 +202,11 @@ namespace Infrastructure.Crosscutting.Declaration
         #region IsNotNullOrDBNull
 
         /// <summary>
-        /// Determines if the object is not null or DBNull
+        ///     Determines if the object is not null or DBNull
         /// </summary>
         /// <param name="Object">The object to check</param>
         /// <returns>False if it is null/DBNull, true otherwise</returns>
-        public static bool IsNotNullOrDBNull(this object Object)
+        public static bool IsNotNullOrDbNull(this object Object)
         {
             return Object != null && !Convert.IsDBNull(Object);
         }
@@ -216,11 +216,11 @@ namespace Infrastructure.Crosscutting.Declaration
         #region IsNullOrDBNull
 
         /// <summary>
-        /// Determines if the object is null or DBNull
+        ///     Determines if the object is null or DBNull
         /// </summary>
         /// <param name="Object">The object to check</param>
         /// <returns>True if it is null/DBNull, false otherwise</returns>
-        public static bool IsNullOrDBNull(this object Object)
+        public static bool IsNullOrDbNull(this object Object)
         {
             return Object == null || Convert.IsDBNull(Object);
         }
@@ -230,14 +230,14 @@ namespace Infrastructure.Crosscutting.Declaration
         #region ThrowIfNullOrDBNull
 
         /// <summary>
-        /// Determines if the object is null or DbNull and throws an ArgumentNullException if it is
+        ///     Determines if the object is null or DbNull and throws an ArgumentNullException if it is
         /// </summary>
-        /// <param name="Item">The object to check</param>
-        /// <param name="Name">Name of the argument</param>
-        public static void ThrowIfNullOrDBNull(this object Item, string Name)
+        /// <param name="item">The object to check</param>
+        /// <param name="name">Name of the argument</param>
+        public static void ThrowIfNullOrDbNull(this object item, string name)
         {
-            if (Item.IsNullOrDBNull())
-                throw new ArgumentNullException(Name);
+            if (item.IsNullOrDbNull())
+                throw new ArgumentNullException(name);
         }
 
         #endregion
@@ -245,14 +245,14 @@ namespace Infrastructure.Crosscutting.Declaration
         #region ThrowIfNull
 
         /// <summary>
-        /// Determines if the object is null and throws an ArgumentNullException if it is
+        ///     Determines if the object is null and throws an ArgumentNullException if it is
         /// </summary>
-        /// <param name="Item">The object to check</param>
-        /// <param name="Name">Name of the argument</param>
-        public static void ThrowIfNull(this object Item, string Name)
+        /// <param name="item">The object to check</param>
+        /// <param name="name">Name of the argument</param>
+        public static void ThrowIfNull(this object item, string name)
         {
-            if (Item.IsNull())
-                throw new ArgumentNullException(Name);
+            if (item.IsNull())
+                throw new ArgumentNullException(name);
         }
 
         #endregion
@@ -260,16 +260,16 @@ namespace Infrastructure.Crosscutting.Declaration
         #region FormatToString
 
         /// <summary>
-        /// Calls the object's ToString function passing in the formatting
+        ///     Calls the object's ToString function passing in the formatting
         /// </summary>
-        /// <param name="Input">Input object</param>
-        /// <param name="Format">Format of the output string</param>
+        /// <param name="input">Input object</param>
+        /// <param name="format">Format of the output string</param>
         /// <returns>The formatted string</returns>
-        public static string FormatToString(this object Input, string Format)
+        public static string FormatToString(this object input, string format)
         {
-            if (Input.IsNull())
+            if (input.IsNull())
                 return "";
-            return !string.IsNullOrEmpty(Format) ? (string)CallMethod("ToString", Input, Format) : Input.ToString();
+            return !string.IsNullOrEmpty(format) ? (string) CallMethod("ToString", input, format) : input.ToString();
         }
 
         #endregion
@@ -277,20 +277,24 @@ namespace Infrastructure.Crosscutting.Declaration
         #endregion
 
         #region 字符串扩展方法
+
+        private const string RegNumberStr = @"[+-]?\d+[\.]?\d*";
+
+       
         /// <summary>
-        /// 判断字符串是否为空
-        /// 为空时返回true、否则返回false
+        ///     判断字符串是否为空
+        ///     为空时返回true、否则返回false
         /// </summary>
-        /// <param name="s"></param>
+        /// <param name="str">字符串</param>
         /// <returns>为空时返回true、否则返回false</returns>
-        public static bool IsEmpty(this string s)
+        public static bool IsEmptyString(this string str)
         {
-            return string.IsNullOrEmpty(s);
+            return string.IsNullOrEmpty(str) || str.Trim().Length == 0;
         }
 
         /// <summary>
-        /// 判断字符串是否为int
-        /// 为int 时返回true、否则返回false
+        ///     判断字符串是否为int
+        ///     为int 时返回true、否则返回false
         /// </summary>
         /// <param name="s"></param>
         /// <returns>为int 时返回true、否则返回false</returns>
@@ -299,86 +303,62 @@ namespace Infrastructure.Crosscutting.Declaration
             int i;
             bool b = int.TryParse(s, out i);
             return b;
-        }
+        } 
 
         /// <summary>
-        /// 扩展方法用来判断字符串是不是Email形式
+        ///     扩展方法用来判断字符串是不是Email形式
         /// </summary>
         /// <param name="s"></param>
         /// <returns></returns>
         public static bool IsEmail(this string s)
-        {
-            //Regex r = new Regex(@"\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*");     
-            Regex r = new Regex(@"^[\w-]+(\.[\w-]+)*\.*@[\w-]+(\.[\w-]+)+$");
+        {   
+            var r = new Regex(@"^[\w-]+(\.[\w-]+)*\.*@[\w-]+(\.[\w-]+)+$");
             return r.IsMatch(s);
         }
 
-        public static bool IsEmptyString(this string str)
+        public static bool IsIp(this string str)
         {
-            return string.IsNullOrEmpty(str) || str.Trim().Length == 0;
-        }
-
-        public static bool IsNumberString(this string str)
-        {
-            int result = 0;
-            return int.TryParse(str, out result);
-        }
-
-        public static bool IsValidateIP(this string str)
-        {
-            string pattern = @"\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b";
+            const string pattern =
+                @"\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b";
 
             if (IsEmptyString(str))
                 return true;
 
             str = str.Trim();
 
-            Regex rgx = new Regex(pattern, RegexOptions.IgnoreCase);
+            var rgx = new Regex(pattern, RegexOptions.IgnoreCase);
             return rgx.IsMatch(str);
         }
 
-        public static bool IsValidateEmail(this string str)
+        public static bool IsUrl(this string str)
         {
-            string pattern = @"\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b";
+            const string pattern =
+                @"((https?|ftp|gopher|telnet|file|notes|ms-help):((//)|(\\\\))+[\w\d:#@%/;$()~_?\+-=\\\.&]*)";
 
             if (IsEmptyString(str))
                 return true;
 
             str = str.Trim();
 
-            Regex rgx = new Regex(pattern, RegexOptions.IgnoreCase);
+            var rgx = new Regex(pattern, RegexOptions.IgnoreCase);
             return rgx.IsMatch(str);
         }
 
-        public static bool IsValidateUrl(this string str)
-        {
-            string pattern = @"((https?|ftp|gopher|telnet|file|notes|ms-help):((//)|(\\\\))+[\w\d:#@%/;$()~_?\+-=\\\.&]*)";
+        public static bool IsPhone(this string str)
+        { 
+            const string pattern = @"((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)";
 
             if (IsEmptyString(str))
                 return true;
 
             str = str.Trim();
 
-            Regex rgx = new Regex(pattern, RegexOptions.IgnoreCase);
-            return rgx.IsMatch(str);
+            var rgx = new Regex(pattern, RegexOptions.IgnoreCase);
+            return rgx.IsMatch(str); 
         }
 
-        public static bool IsValidatePhone(this string str)
-        {
-            //string pattern = @"\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b";
-
-            if (IsEmptyString(str))
-                return true;
-
-            //str = str.Trim();
-
-            //Regex rgx = new Regex(pattern, RegexOptions.IgnoreCase);
-            //return rgx.IsMatch(str);
-            return true;
-        }
-         
         /// <summary>
-        /// 日期格式字符串判断
+        ///     日期格式字符串判断
         /// </summary>
         /// <param name="str"></param>
         /// <returns></returns>
@@ -389,7 +369,9 @@ namespace Infrastructure.Crosscutting.Declaration
             {
                 if (!string.IsNullOrEmpty(str))
                 {
+// ReSharper disable ReturnValueOfPureMethodIsNotUsed
                     DateTime.Parse(str);
+// ReSharper restore ReturnValueOfPureMethodIsNotUsed
                     result = true;
                 }
                 else
@@ -405,21 +387,21 @@ namespace Infrastructure.Crosscutting.Declaration
         }
 
         /// <summary>
-        /// 验证身份证号码
+        ///     验证身份证号码
         /// </summary>
-        /// <param name="Id">身份证号码</param>
+        /// <param name="id">身份证号码</param>
         /// <returns>验证成功为True，否则为False</returns>
-        public static bool CheckIDCard(this string Id)
+        public static bool IsIdCard(this string id)
         {
-            if (Id.Length == 18)
+            if (id.Length == 18)
             {
-                return ObjectExtendMethod.CheckIDCard18(Id);
+                return CheckIdCard18(id);
             }
-            return Id.Length == 15 && ObjectExtendMethod.CheckIDCard15(Id);
+            return id.Length == 15 && CheckIdCard15(id);
         }
 
         /// <summary>
-        /// 转换成 HTML code
+        ///     转换成 HTML code
         /// </summary>
         /// <param name="str">string</param>
         /// <returns>string</returns>
@@ -434,8 +416,9 @@ namespace Infrastructure.Crosscutting.Declaration
             str = str.Replace("\n", "<br>");
             return str;
         }
+
         /// <summary>
-        /// 解析html成 普通文本
+        ///     解析html成 普通文本
         /// </summary>
         /// <param name="str">string</param>
         /// <returns>string</returns>
@@ -450,7 +433,7 @@ namespace Infrastructure.Crosscutting.Declaration
         }
 
         /// <summary>
-        /// SQL注入字符清理
+        ///     SQL注入字符清理
         /// </summary>
         /// <param name="sqlText"></param>
         /// <returns></returns>
@@ -477,16 +460,14 @@ namespace Infrastructure.Crosscutting.Declaration
         }
 
         //提取数字的正则表达式
-        private const string RegNumberStr = @"[+-]?\d+[\.]?\d*";
-          
+
         /// <summary>
-        /// 在字符串中提取最后一个数值
+        ///     在字符串中提取最后一个数值
         /// </summary>
         /// <param name="str">传入的字符串</param>
         /// <returns></returns>
-        public static decimal GetNumber(this string str)
+        public static decimal GetNumberDecimal(this string str)
         {
-            decimal result = 0;
             if (!string.IsNullOrEmpty(str))
             {
                 MatchCollection mc = Regex.Matches(str, RegNumberStr);
@@ -495,24 +476,20 @@ namespace Infrastructure.Crosscutting.Declaration
 
                 if (i > 0)
                 {
-                    return mc[i - 1].Groups[0].Value.ToDecimal();
+                    return mc[i - 1].Groups[0].Value.ToType<decimal>();
                 }
-                else
-                {
-                    return 0;
-                } 
+                return 0;
             }
-            return result; 
+            return 0;
         }
 
         /// <summary>
-        /// 在字符串中提取最后一个数值
+        ///     在字符串中提取最后一个数值
         /// </summary>
         /// <param name="str">传入的字符串</param>
         /// <returns></returns>
         public static double GetNumberDouble(this string str)
         {
-            double result = 0;
             if (!string.IsNullOrEmpty(str))
             {
                 MatchCollection mc = Regex.Matches(str, RegNumberStr);
@@ -521,19 +498,16 @@ namespace Infrastructure.Crosscutting.Declaration
 
                 if (i > 0)
                 {
-                    return mc[i - 1].Groups[0].Value.ToDouble();
+                    return mc[i - 1].Groups[0].Value.ToType<double>();
                 }
-                else
-                {
-                    return 0;
-                } 
+                return 0;
             }
-            return result;
+            return 0;
         }
 
         /// <summary>
-        /// 提取字符串中的数值，如果不为数值者替换为 空字符 得到后在分割得到想到的数据
-        /// 用str.Split(' ')分割，去掉不想要的空字符
+        ///     提取字符串中的数值，如果不为数值者替换为 空字符 得到后在分割得到想到的数据
+        ///     用str.Split(' ')分割，去掉不想要的空字符
         /// </summary>
         /// <param name="str">传入的字符串</param>
         /// <returns></returns>
@@ -544,39 +518,35 @@ namespace Infrastructure.Crosscutting.Declaration
             if (!string.IsNullOrEmpty(str))
             {
                 // 正则表达式剔除非数字字符（不包含小数点.） 
-                result = Regex.Replace(str, @"[^\d.\d]", " ").Trim();                  
+                result = Regex.Replace(str, @"[^\d.\d]", " ").Trim();
             }
             return result;
         }
 
         /// <summary>
-        /// 在字符串中提取最后一个整型
+        ///     在字符串中提取最后一个整型
         /// </summary>
         /// <param name="str">传入的字符串</param>
         /// <returns></returns>
         public static int GetNumberInt(this string str)
         {
-            int result = 0;
             if (!string.IsNullOrEmpty(str))
             {
                 MatchCollection mc = Regex.Matches(str, RegNumberStr, RegexOptions.Compiled);
-                 
+
                 int i = mc.Count;
 
                 if (i > 0)
                 {
-                    return mc[i - 1].Groups[0].Value.ToInt32(); 
+                    return mc[i - 1].Groups[0].Value.ToType<int>();
                 }
-                else
-                {
-                    return 0;
-                } 
+                return 0;
             }
-            return result; 
+            return 0;
         }
 
         /// <summary>
-        /// 避免了用StringBuilder的性能问题
+        ///     避免了用StringBuilder的性能问题
         /// </summary>
         /// <param name="format"></param>
         /// <param name="args"></param>
@@ -586,7 +556,7 @@ namespace Infrastructure.Crosscutting.Declaration
             if (format == null || args == null)
                 throw new ArgumentNullException((format == null) ? "format" : "args");
 
-            var capacity = format.Length + args.Where(p => p != null).Select(p => p.ToString()).Sum(p => p.Length);
+            int capacity = format.Length + args.Where(p => p != null).Select(p => p.ToString()).Sum(p => p.Length);
             var stringBuilder = new StringBuilder(capacity);
             stringBuilder.AppendFormat(format, args);
             return stringBuilder.ToString();
@@ -597,18 +567,18 @@ namespace Infrastructure.Crosscutting.Declaration
         #region IEnumerable扩展方法
 
         /// <summary>
-        /// 将指定类型列表转换为T-Sql的In语句的类型
-        /// </summary>        
+        ///     将指定类型列表转换为T-Sql的In语句的类型
+        /// </summary>
         /// <returns></returns>
         public static string ToSqlInContent<TSource>(this IEnumerable<TSource> source)
         {
             try
             {
-                StringBuilder sb = new StringBuilder();
-                foreach (var content in source)
+                var sb = new StringBuilder();
+                foreach (TSource content in source)
                 {
                     sb.Append("'");
-                    sb.Append(content.ToString());
+                    sb.Append(content);
                     sb.Append("'");
                     sb.Append(",");
                 }
@@ -624,19 +594,19 @@ namespace Infrastructure.Crosscutting.Declaration
         }
 
         /// <summary>
-        /// 将指定类型的列表转换为以逗号分开的字符串，默认是“，”号分割, 结果,如 "1,2,3" 
+        ///     将指定类型的列表转换为以逗号分开的字符串，默认是“，”号分割, 结果,如 "1,2,3"
         /// </summary>
         /// <typeparam name="TSource"></typeparam>
         /// <param name="sources"></param>
         /// <param name="separator">指定分割符</param>
         /// <returns></returns>
-        public static string ToColumnString<TSource>(this IEnumerable<TSource> sources, string separator =",")
+        public static string ToColumnString<TSource>(this IEnumerable<TSource> sources, string separator = ",")
         {
             try
             {
-                StringBuilder sb = new StringBuilder();
+                var sb = new StringBuilder();
 
-                foreach (var content in sources)
+                foreach (TSource content in sources)
                 {
                     if (sb.Length > 0)
                         sb.Append(separator);
@@ -644,10 +614,7 @@ namespace Infrastructure.Crosscutting.Declaration
                     sb.Append(content);
                 }
 
-                if (sb.Length > 0)
-                    return sb.ToString();
-                else
-                    return string.Empty;
+                return sb.Length > 0 ? sb.ToString() : string.Empty;
             }
             catch
             {
@@ -656,7 +623,7 @@ namespace Infrastructure.Crosscutting.Declaration
         }
 
         /// <summary>
-        /// 转换为一个DataTable
+        ///     转换为一个DataTable
         /// </summary>
         /// <typeparam name="TResult"></typeparam>
         /// <param name="value"></param>
@@ -664,17 +631,17 @@ namespace Infrastructure.Crosscutting.Declaration
         public static DataTable ToDataTable<TResult>(this IEnumerable<TResult> value) where TResult : class
         {
             //创建属性的集合
-            List<PropertyInfo> pList = new List<PropertyInfo>();
+            var pList = new List<PropertyInfo>();
             //获得反射的入口
-            Type type = typeof(TResult);
-            DataTable dt = new DataTable();
+            Type type = typeof (TResult);
+            var dt = new DataTable();
             //把所有的public属性加入到集合 并添加DataTable的列
-            Array.ForEach<PropertyInfo>(type.GetProperties(), p =>
-            {
-                pList.Add(p);
-                dt.Columns.Add(p.Name);
-            });
-            foreach (var item in value)
+            Array.ForEach(type.GetProperties(), p =>
+                {
+                    pList.Add(p);
+                    dt.Columns.Add(p.Name);
+                });
+            foreach (TResult item in value)
             {
                 //创建一个DataRow实例
                 DataRow row = dt.NewRow();
@@ -689,15 +656,15 @@ namespace Infrastructure.Crosscutting.Declaration
         #region ThrowIfNullOrEmpty
 
         /// <summary>
-        /// Determines if the IEnumerable is null or empty and throws an ArgumentNullException if it is
+        ///     Determines if the IEnumerable is null or empty and throws an ArgumentNullException if it is
         /// </summary>
         /// <typeparam name="T">Item type</typeparam>
-        /// <param name="Item">The object to check</param>
-        /// <param name="Name">Name of the argument</param>
-        public static void ThrowIfNullOrEmpty<T>(this IEnumerable<T> Item, string Name)
+        /// <param name="item">The object to check</param>
+        /// <param name="name">Name of the argument</param>
+        public static void ThrowIfNullOrEmpty<T>(this IEnumerable<T> item, string name)
         {
-            if (Item.IsNullOrEmpty())
-                throw new ArgumentNullException(Name);
+            if (item.IsNullOrEmpty())
+                throw new ArgumentNullException(name);
         }
 
         #endregion
@@ -707,23 +674,18 @@ namespace Infrastructure.Crosscutting.Declaration
         #region Exists
 
         /// <summary>
-        /// Used to determine if an item in the IEnumerable matches a predicate
+        ///     Used to determine if an item in the IEnumerable matches a predicate
         /// </summary>
         /// <typeparam name="T">Object type</typeparam>
-        /// <param name="List">List to search</param>
-        /// <param name="Match">The predicate used to check if something exists</param>
+        /// <param name="list">List to search</param>
+        /// <param name="match">The predicate used to check if something exists</param>
         /// <returns>True if at least one item matches the predicate, false otherwise</returns>
-        public static bool Exists<T>(this IEnumerable<T> List, Predicate<T> Match)
+        public static bool Exists<T>(this IEnumerable<T> list, Predicate<T> match)
         {
-            Match.ThrowIfNull("Match");
-            if (List.IsNull())
+            match.ThrowIfNull("Match");
+            if (list.IsNull())
                 return false;
-            foreach (T Item in List)
-            {
-                if (Match(Item))
-                    return true;
-            }
-            return false;
+            return list.Any(item => match(item));
         }
 
         #endregion
@@ -731,55 +693,56 @@ namespace Infrastructure.Crosscutting.Declaration
         #region For
 
         /// <summary>
-        /// Does an action for each item in the IEnumerable between the start and end indexes
+        ///     Does an action for each item in the IEnumerable between the start and end indexes
         /// </summary>
         /// <typeparam name="T">Object type</typeparam>
-        /// <param name="List">IEnumerable to iterate over</param>
-        /// <param name="Start">Item to start with</param>
-        /// <param name="End">Item to end with</param>
-        /// <param name="Action">Action to do</param>
+        /// <param name="list">IEnumerable to iterate over</param>
+        /// <param name="start">Item to start with</param>
+        /// <param name="end">Item to end with</param>
+        /// <param name="action">Action to do</param>
         /// <returns>The original list</returns>
-        public static IEnumerable<T> For<T>(this IEnumerable<T> List, int Start, int End, Action<T> Action)
+        public static IEnumerable<T> For<T>(this IEnumerable<T> list, int start, int end, Action<T> action)
         {
-            List.ThrowIfNull("List");
-            Action.ThrowIfNull("Action");
+            list.ThrowIfNull("List");
+            action.ThrowIfNull("Action");
             int x = 0;
-            foreach (T Item in List)
+            var enumerable = list as T[] ?? list.ToArray();
+            foreach (T item in enumerable)
             {
-                if (x.Between(Start, End))
-                    Action(Item);
+                if (x.Between(start, end))
+                    action(item);
                 ++x;
-                if (x > End)
+                if (x > end)
                     break;
             }
-            return List;
+            return enumerable;
         }
 
         /// <summary>
-        /// Does a function for each item in the IEnumerable between the start and end indexes and returns an IEnumerable of the results
+        ///     Does a function for each item in the IEnumerable between the start and end indexes and returns an IEnumerable of the results
         /// </summary>
         /// <typeparam name="T">Object type</typeparam>
         /// <typeparam name="R">Return type</typeparam>
-        /// <param name="List">IEnumerable to iterate over</param>
-        /// <param name="Start">Item to start with</param>
-        /// <param name="End">Item to end with</param>
-        /// <param name="Function">Function to do</param>
+        /// <param name="list">IEnumerable to iterate over</param>
+        /// <param name="start">Item to start with</param>
+        /// <param name="end">Item to end with</param>
+        /// <param name="function">Function to do</param>
         /// <returns>The resulting list</returns>
-        public static IEnumerable<R> For<T, R>(this IEnumerable<T> List, int Start, int End, Func<T, R> Function)
+        public static IEnumerable<R> For<T, R>(this IEnumerable<T> list, int start, int end, Func<T, R> function)
         {
-            List.ThrowIfNull("List");
-            Function.ThrowIfNull("Function");
+            list.ThrowIfNull("List");
+            function.ThrowIfNull("Function");
             int x = 0;
-            List<R> ReturnValues = new List<R>();
-            foreach (T Item in List)
+            var returnValues = new List<R>();
+            foreach (T item in list)
             {
-                if (x.Between(Start, End))
-                    ReturnValues.Add(Function(Item));
+                if (x.Between(start, end))
+                    returnValues.Add(function(item));
                 ++x;
-                if (x > End)
+                if (x > end)
                     break;
             }
-            return ReturnValues;
+            return returnValues;
         }
 
         #endregion
@@ -787,37 +750,34 @@ namespace Infrastructure.Crosscutting.Declaration
         #region ForEach
 
         /// <summary>
-        /// Does an action for each item in the IEnumerable
+        ///     Does an action for each item in the IEnumerable
         /// </summary>
         /// <typeparam name="T">Object type</typeparam>
-        /// <param name="List">IEnumerable to iterate over</param>
-        /// <param name="Action">Action to do</param>
+        /// <param name="list">IEnumerable to iterate over</param>
+        /// <param name="action">Action to do</param>
         /// <returns>The original list</returns>
-        public static IEnumerable<T> ForEach<T>(this IEnumerable<T> List, Action<T> Action)
+        public static IEnumerable<T> ForEach<T>(this IEnumerable<T> list, Action<T> action)
         {
-            List.ThrowIfNull("List");
-            Action.ThrowIfNull("Action");
-            foreach (T Item in List)
-                Action(Item);
-            return List;
+            list.ThrowIfNull("List");
+            action.ThrowIfNull("Action");
+            foreach (T item in list)
+                action(item);
+            return list;
         }
 
         /// <summary>
-        /// Does a function for each item in the IEnumerable, returning a list of the results
+        ///     Does a function for each item in the IEnumerable, returning a list of the results
         /// </summary>
         /// <typeparam name="T">Object type</typeparam>
         /// <typeparam name="R">Return type</typeparam>
-        /// <param name="List">IEnumerable to iterate over</param>
-        /// <param name="Function">Function to do</param>
+        /// <param name="list">IEnumerable to iterate over</param>
+        /// <param name="function">Function to do</param>
         /// <returns>The resulting list</returns>
-        public static IEnumerable<R> ForEach<T, R>(this IEnumerable<T> List, Func<T, R> Function)
+        public static IEnumerable<R> ForEach<T, R>(this IEnumerable<T> list, Func<T, R> function)
         {
-            List.ThrowIfNull("List");
-            Function.ThrowIfNull("Function");
-            List<R> ReturnValues = new List<R>();
-            foreach (T Item in List)
-                ReturnValues.Add(Function(Item));
-            return ReturnValues;
+            list.ThrowIfNull("List");
+            function.ThrowIfNull("Function");
+            return list.Select(item => function(item)).ToList();
         }
 
         #endregion
@@ -825,39 +785,39 @@ namespace Infrastructure.Crosscutting.Declaration
         #region ForParallel
 
         /// <summary>
-        /// Does an action for each item in the IEnumerable between the start and end indexes in parallel
+        ///     Does an action for each item in the IEnumerable between the start and end indexes in parallel
         /// </summary>
         /// <typeparam name="T">Object type</typeparam>
-        /// <param name="List">IEnumerable to iterate over</param>
-        /// <param name="Start">Item to start with</param>
-        /// <param name="End">Item to end with</param>
-        /// <param name="Action">Action to do</param>
+        /// <param name="list">IEnumerable to iterate over</param>
+        /// <param name="start">Item to start with</param>
+        /// <param name="end">Item to end with</param>
+        /// <param name="action">Action to do</param>
         /// <returns>The original list</returns>
-        public static IEnumerable<T> ForParallel<T>(this IEnumerable<T> List, int Start, int End, Action<T> Action)
+        public static IEnumerable<T> ForParallel<T>(this IEnumerable<T> list, int start, int end, Action<T> action)
         {
-            List.ThrowIfNull("List");
-            Action.ThrowIfNull("Action");
-            Parallel.For(Start, End + 1, new Action<int>(x => Action(List.ElementAt(x))));
-            return List;
+            list.ThrowIfNull("List");
+            action.ThrowIfNull("Action");
+            Parallel.For(start, end + 1, x => action(list.ElementAt(x)));
+            return list;
         }
 
         /// <summary>
-        /// Does an action for each item in the IEnumerable between the start and end indexes in parallel
+        ///     Does an action for each item in the IEnumerable between the start and end indexes in parallel
         /// </summary>
         /// <typeparam name="T">Object type</typeparam>
         /// <typeparam name="R">Results type</typeparam>
-        /// <param name="List">IEnumerable to iterate over</param>
-        /// <param name="Start">Item to start with</param>
-        /// <param name="End">Item to end with</param>
-        /// <param name="Function">Function to do</param>
+        /// <param name="list">IEnumerable to iterate over</param>
+        /// <param name="start">Item to start with</param>
+        /// <param name="end">Item to end with</param>
+        /// <param name="function">Function to do</param>
         /// <returns>The resulting list</returns>
-        public static IEnumerable<R> ForParallel<T, R>(this IEnumerable<T> List, int Start, int End, Func<T, R> Function)
+        public static IEnumerable<R> ForParallel<T, R>(this IEnumerable<T> list, int start, int end, Func<T, R> function)
         {
-            List.ThrowIfNull("List");
-            Function.ThrowIfNull("Function");
-            R[] Results = new R[(End + 1) - Start];
-            Parallel.For(Start, End + 1, new Action<int>(x => Results[x - Start] = Function(List.ElementAt(x))));
-            return Results;
+            list.ThrowIfNull("List");
+            function.ThrowIfNull("Function");
+            var results = new R[(end + 1) - start];
+            Parallel.For(start, end + 1, x => results[x - start] = function(list.ElementAt(x)));
+            return results;
         }
 
         #endregion
@@ -865,33 +825,33 @@ namespace Infrastructure.Crosscutting.Declaration
         #region ForEachParallel
 
         /// <summary>
-        /// Does an action for each item in the IEnumerable in parallel
+        ///     Does an action for each item in the IEnumerable in parallel
         /// </summary>
         /// <typeparam name="T">Object type</typeparam>
-        /// <param name="List">IEnumerable to iterate over</param>
-        /// <param name="Action">Action to do</param>
+        /// <param name="list">IEnumerable to iterate over</param>
+        /// <param name="action">Action to do</param>
         /// <returns>The original list</returns>
-        public static IEnumerable<T> ForEachParallel<T>(this IEnumerable<T> List, Action<T> Action)
+        public static IEnumerable<T> ForEachParallel<T>(this IEnumerable<T> list, Action<T> action)
         {
-            List.ThrowIfNull("List");
-            Action.ThrowIfNull("Action");
-            Parallel.ForEach(List, Action);
-            return List;
+            list.ThrowIfNull("List");
+            action.ThrowIfNull("Action");
+            Parallel.ForEach(list, action);
+            return list;
         }
 
         /// <summary>
-        /// Does an action for each item in the IEnumerable in parallel
+        ///     Does an action for each item in the IEnumerable in parallel
         /// </summary>
         /// <typeparam name="T">Object type</typeparam>
         /// <typeparam name="R">Results type</typeparam>
-        /// <param name="List">IEnumerable to iterate over</param>
-        /// <param name="Function">Function to do</param>
+        /// <param name="list">IEnumerable to iterate over</param>
+        /// <param name="function">Function to do</param>
         /// <returns>The results in an IEnumerable list</returns>
-        public static IEnumerable<R> ForEachParallel<T, R>(this IEnumerable<T> List, Func<T, R> Function)
+        public static IEnumerable<R> ForEachParallel<T, R>(this IEnumerable<T> list, Func<T, R> function)
         {
-            List.ThrowIfNull("List");
-            Function.ThrowIfNull("Function");
-            return List.ForParallel(0, List.Count() - 1, Function);
+            list.ThrowIfNull("List");
+            function.ThrowIfNull("Function");
+            return list.ForParallel(0, list.Count() - 1, function);
         }
 
         #endregion
@@ -899,14 +859,14 @@ namespace Infrastructure.Crosscutting.Declaration
         #region IsNullOrEmpty
 
         /// <summary>
-        /// Determines if a list is null or empty
+        ///     Determines if a list is null or empty
         /// </summary>
         /// <typeparam name="T">Data type</typeparam>
-        /// <param name="Value">List to check</param>
+        /// <param name="value">List to check</param>
         /// <returns>True if it is null or empty, false otherwise</returns>
-        public static bool IsNullOrEmpty<T>(this IEnumerable<T> Value)
+        public static bool IsNullOrEmpty<T>(this IEnumerable<T> value)
         {
-            return Value.IsNull() || Value.Count() == 0;
+            return value.IsNull() || !value.Any();
         }
 
         #endregion
@@ -914,19 +874,20 @@ namespace Infrastructure.Crosscutting.Declaration
         #region RemoveDefaults
 
         /// <summary>
-        /// Removes default values from a list
+        ///     Removes default values from a list
         /// </summary>
         /// <typeparam name="T">Value type</typeparam>
-        /// <param name="Value">List to cull items from</param>
-        /// <param name="EqualityComparer">Equality comparer used (defaults to GenericEqualityComparer)</param>
+        /// <param name="value">List to cull items from</param>
+        /// <param name="equalityComparer">Equality comparer used (defaults to GenericEqualityComparer)</param>
         /// <returns>An IEnumerable with the default values removed</returns>
-        public static IEnumerable<T> RemoveDefaults<T>(this IEnumerable<T> Value, IEqualityComparer<T> EqualityComparer = null)
+        public static IEnumerable<T> RemoveDefaults<T>(this IEnumerable<T> value,
+                                                       IEqualityComparer<T> equalityComparer = null)
         {
-            if (Value.IsNull())
+            if (value.IsNull())
                 yield break;
-            EqualityComparer = EqualityComparer.NullCheck(new GenericEqualityComparer<T>());
-            foreach (T Item in Value.Where(x => !EqualityComparer.Equals(x, default(T))))
-                yield return Item;
+            equalityComparer = equalityComparer.NullCheck(new GenericEqualityComparer<T>());
+            foreach (T item in value.Where(x => !equalityComparer.Equals(x, default(T))))
+                yield return item;
         }
 
         #endregion
@@ -934,18 +895,19 @@ namespace Infrastructure.Crosscutting.Declaration
         #region ToArray
 
         /// <summary>
-        /// Converts a list to an array
+        ///     Converts a list to an array
         /// </summary>
-        /// <typeparam name="Source">Source type</typeparam>
-        /// <typeparam name="Target">Target type</typeparam>
-        /// <param name="List">List to convert</param>
-        /// <param name="ConvertingFunction">Function used to convert each item</param>
+        /// <typeparam name="TSource">Source type</typeparam>
+        /// <typeparam name="TArget">Target type</typeparam>
+        /// <param name="list">List to convert</param>
+        /// <param name="convertingFunction">Function used to convert each item</param>
         /// <returns>The array containing the items from the list</returns>
-        public static Target[] ToArray<Source, Target>(this IEnumerable<Source> List, Func<Source, Target> ConvertingFunction)
+        public static TArget[] ToArray<TSource, TArget>(this IEnumerable<TSource> list,
+                                                       Func<TSource, TArget> convertingFunction)
         {
-            List.ThrowIfNull("List");
-            ConvertingFunction.ThrowIfNull("ConvertingFunction");
-            return List.ForEach(ConvertingFunction).ToArray();
+            list.ThrowIfNull("List");
+            convertingFunction.ThrowIfNull("ConvertingFunction");
+            return list.ForEach(convertingFunction).ToArray();
         }
 
         #endregion
@@ -953,26 +915,27 @@ namespace Infrastructure.Crosscutting.Declaration
         #region ToString
 
         /// <summary>
-        /// Converts the list to a string where each item is seperated by the Seperator
+        ///     Converts the list to a string where each item is seperated by the Seperator
         /// </summary>
         /// <typeparam name="T">Item type</typeparam>
-        /// <param name="List">List to convert</param>
-        /// <param name="ItemOutput">Used to convert the item to a string (defaults to calling ToString)</param>
-        /// <param name="Seperator">Seperator to use between items (defaults to ,)</param>
+        /// <param name="list">List to convert</param>
+        /// <param name="itemOutput">Used to convert the item to a string (defaults to calling ToString)</param>
+        /// <param name="seperator">Seperator to use between items (defaults to ,)</param>
         /// <returns>The string version of the list</returns>
-        public static string ToString<T>(this IEnumerable<T> List, Func<T, string> ItemOutput = null, string Seperator = ",")
+        public static string ToString<T>(this IEnumerable<T> list, Func<T, string> itemOutput = null,
+                                         string seperator = ",")
         {
-            List.ThrowIfNull("List");
-            Seperator = Seperator.NullCheck("");
-            ItemOutput = ItemOutput.NullCheck(x => x.ToString());
-            StringBuilder Builder = new StringBuilder();
-            string TempSeperator = "";
-            List.ForEach(x =>
-            {
-                Builder.Append(TempSeperator).Append(ItemOutput(x));
-                TempSeperator = Seperator;
-            });
-            return Builder.ToString();
+            list.ThrowIfNull("List");
+            seperator = seperator.NullCheck("");
+            itemOutput = itemOutput.NullCheck(x => x.ToString());
+            var builder = new StringBuilder();
+            string tempSeperator = "";
+            list.ForEach(x =>
+                {
+                    builder.Append(tempSeperator).Append(itemOutput(x));
+                    tempSeperator = seperator;
+                });
+            return builder.ToString();
         }
 
         #endregion
@@ -980,17 +943,17 @@ namespace Infrastructure.Crosscutting.Declaration
         #region TrueForAll
 
         /// <summary>
-        /// Determines if a predicate is true for each item in a list
+        ///     Determines if a predicate is true for each item in a list
         /// </summary>
         /// <typeparam name="T">The type of the items in the list</typeparam>
-        /// <param name="List">IEnumerable to look through</param>
-        /// <param name="Predicate">Predicate to use to check the IEnumerable</param>
+        /// <param name="list">IEnumerable to look through</param>
+        /// <param name="predicate">Predicate to use to check the IEnumerable</param>
         /// <returns>True if they all pass the predicate, false otherwise</returns>
-        public static bool TrueForAll<T>(this IEnumerable<T> List, Predicate<T> Predicate)
+        public static bool TrueForAll<T>(this IEnumerable<T> list, Predicate<T> predicate)
         {
-            List.ThrowIfNull("List");
-            Predicate.ThrowIfNull("Predicate");
-            return !List.Any(x => !Predicate(x));
+            list.ThrowIfNull("List");
+            predicate.ThrowIfNull("Predicate");
+            return list.All(x => predicate(x));
         }
 
         #endregion
@@ -998,27 +961,30 @@ namespace Infrastructure.Crosscutting.Declaration
         #region TryAll
 
         /// <summary>
-        /// Tries to do the action on each item in the list. If an exception is thrown,
-        /// it does the catch action on the item (if it is not null).
+        ///     Tries to do the action on each item in the list. If an exception is thrown,
+        ///     it does the catch action on the item (if it is not null).
         /// </summary>
         /// <typeparam name="T">The type of the items in the list</typeparam>
-        /// <param name="List">IEnumerable to look through</param>
-        /// <param name="Action">Action to run on each item</param>
-        /// <param name="CatchAction">Catch action (defaults to null)</param>
+        /// <param name="list">IEnumerable to look through</param>
+        /// <param name="action">Action to run on each item</param>
+        /// <param name="catchAction">Catch action (defaults to null)</param>
         /// <returns>The list after the action is run on everything</returns>
-        public static IEnumerable<T> TryAll<T>(this IEnumerable<T> List, Action<T> Action, Action<T> CatchAction = null)
+        public static IEnumerable<T> TryAll<T>(this IEnumerable<T> list, Action<T> action, Action<T> catchAction = null)
         {
-            List.ThrowIfNull("List");
-            Action.ThrowIfNull("Action");
-            foreach (T Item in List)
+            list.ThrowIfNull("List");
+            action.ThrowIfNull("Action");
+            foreach (T item in list)
             {
                 try
                 {
-                    Action(Item);
+                    action(item);
                 }
-                catch { if (CatchAction != null) CatchAction(Item); }
+                catch
+                {
+                    if (catchAction != null) catchAction(item);
+                }
             }
-            return List;
+            return list;
         }
 
         #endregion
@@ -1026,28 +992,32 @@ namespace Infrastructure.Crosscutting.Declaration
         #region TryAllParallel
 
         /// <summary>
-        /// Tries to do the action on each item in the list. If an exception is thrown,
-        /// it does the catch action on the item (if it is not null). This is done in
-        /// parallel.
+        ///     Tries to do the action on each item in the list. If an exception is thrown,
+        ///     it does the catch action on the item (if it is not null). This is done in
+        ///     parallel.
         /// </summary>
         /// <typeparam name="T">The type of the items in the list</typeparam>
-        /// <param name="List">IEnumerable to look through</param>
-        /// <param name="Action">Action to run on each item</param>
-        /// <param name="CatchAction">Catch action (defaults to null)</param>
+        /// <param name="list">IEnumerable to look through</param>
+        /// <param name="action">Action to run on each item</param>
+        /// <param name="catchAction">Catch action (defaults to null)</param>
         /// <returns>The list after the action is run on everything</returns>
-        public static IEnumerable<T> TryAllParallel<T>(this IEnumerable<T> List, Action<T> Action, Action<T> CatchAction = null)
+        public static IEnumerable<T> TryAllParallel<T>(this IEnumerable<T> list, Action<T> action,
+                                                       Action<T> catchAction = null)
         {
-            List.ThrowIfNull("List");
-            Action.ThrowIfNull("Action");
-            Parallel.ForEach<T>(List, delegate(T Item)
-            {
-                try
+            list.ThrowIfNull("List");
+            action.ThrowIfNull("Action");
+            Parallel.ForEach(list, delegate(T Item)
                 {
-                    Action(Item);
-                }
-                catch { if (CatchAction != null) CatchAction(Item); }
-            });
-            return List;
+                    try
+                    {
+                        action(Item);
+                    }
+                    catch
+                    {
+                        if (catchAction != null) catchAction(Item);
+                    }
+                });
+            return list;
         }
 
         #endregion
@@ -1059,7 +1029,7 @@ namespace Infrastructure.Crosscutting.Declaration
         #region DateTime 扩展方法
 
         /// <summary>
-        /// 返回指定日期的是星期几，会根据区域信息来返回，如：中文环境为 “星期一”
+        ///     返回指定日期的是星期几，会根据区域信息来返回，如：中文环境为 “星期一”
         /// </summary>
         /// <param name="dateTime"></param>
         /// <returns></returns>
@@ -1067,7 +1037,7 @@ namespace Infrastructure.Crosscutting.Declaration
         {
             try
             {
-                return System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(dateTime.DayOfWeek);
+                return CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(dateTime.DayOfWeek);
             }
             catch
             {
@@ -1076,7 +1046,7 @@ namespace Infrastructure.Crosscutting.Declaration
         }
 
         /// <summary>
-        /// 返回指定日期的农历日期
+        ///     返回指定日期的农历日期
         /// </summary>
         /// <param name="dateTime"></param>
         /// <returns></returns>
@@ -1108,65 +1078,67 @@ namespace Infrastructure.Crosscutting.Declaration
         #region String Extension Helper
 
         /// <summary>
-        /// 验证15位身份证号
+        ///     验证15位身份证号
         /// </summary>
-        /// <param name="Id">身份证号</param>
+        /// <param name="id">身份证号</param>
         /// <returns>验证成功为True，否则为False</returns>
-        private static bool CheckIDCard18(string Id)
+        private static bool CheckIdCard18(string id)
         {
-            long num = 0L;
-            if (!long.TryParse(Id.Remove(17), out num) || (double)num < Math.Pow(10.0, 16.0) || !long.TryParse(Id.Replace('x', '0').Replace('X', '0'), out num))
+            long num;
+            if (!long.TryParse(id.Remove(17), out num) || num < Math.Pow(10.0, 16.0) ||
+                !long.TryParse(id.Replace('x', '0').Replace('X', '0'), out num))
             {
                 return false;
             }
-            string text = "11x22x35x44x53x12x23x36x45x54x13x31x37x46x61x14x32x41x50x62x15x33x42x51x63x21x34x43x52x64x65x71x81x82x91";
-            if (text.IndexOf(Id.Remove(2)) == -1)
+            const string text = "11x22x35x44x53x12x23x36x45x54x13x31x37x46x61x14x32x41x50x62x15x33x42x51x63x21x34x43x52x64x65x71x81x82x91";
+            if (text.IndexOf(id.Remove(2), StringComparison.Ordinal) == -1)
             {
                 return false;
             }
-            string s = Id.Substring(6, 8).Insert(6, "-").Insert(4, "-");
-            DateTime dateTime = default(DateTime);
+            string s = id.Substring(6, 8).Insert(6, "-").Insert(4, "-");
+            DateTime dateTime;
             if (!DateTime.TryParse(s, out dateTime))
             {
                 return false;
             }
-            string[] array = "1,0,x,9,8,7,6,5,4,3,2".Split(new char[]
-			{
-				','
-			});
-            string[] array2 = "7,9,10,5,8,4,2,1,6,3,7,9,10,5,8,4,2".Split(new char[]
-			{
-				','
-			});
-            char[] array3 = Id.Remove(17).ToCharArray();
+            string[] array = "1,0,x,9,8,7,6,5,4,3,2".Split(new[]
+                {
+                    ','
+                });
+            string[] array2 = "7,9,10,5,8,4,2,1,6,3,7,9,10,5,8,4,2".Split(new[]
+                {
+                    ','
+                });
+            char[] array3 = id.Remove(17).ToCharArray();
             int num2 = 0;
             for (int i = 0; i < 17; i++)
             {
-                num2 += int.Parse(array2[i]) * int.Parse(array3[i].ToString());
+                num2 += int.Parse(array2[i])*int.Parse(array3[i].ToString(CultureInfo.InvariantCulture));
             }
-            int num3 = -1;
+            int num3;
             Math.DivRem(num2, 11, out num3);
-            return !(array[num3] != Id.Substring(17, 1).ToLower());
+            return array[num3] == id.Substring(17, 1).ToLower();
         }
+
         /// <summary>
-        /// 验证18位身份证号
+        ///     验证18位身份证号
         /// </summary>
-        /// <param name="Id">身份证号</param>
+        /// <param name="id">身份证号</param>
         /// <returns>验证成功为True，否则为False</returns>
-        private static bool CheckIDCard15(string Id)
+        private static bool CheckIdCard15(string id)
         {
-            long num = 0L;
-            if (!long.TryParse(Id, out num) || (double)num < Math.Pow(10.0, 14.0))
+            long num;
+            if (!long.TryParse(id, out num) || num < Math.Pow(10.0, 14.0))
             {
                 return false;
             }
-            string text = "11x22x35x44x53x12x23x36x45x54x13x31x37x46x61x14x32x41x50x62x15x33x42x51x63x21x34x43x52x64x65x71x81x82x91";
-            if (text.IndexOf(Id.Remove(2)) == -1)
+            const string text = "11x22x35x44x53x12x23x36x45x54x13x31x37x46x61x14x32x41x50x62x15x33x42x51x63x21x34x43x52x64x65x71x81x82x91";
+            if (text.IndexOf(id.Remove(2), StringComparison.Ordinal) == -1)
             {
                 return false;
             }
-            string s = Id.Substring(6, 6).Insert(4, "-").Insert(2, "-");
-            DateTime dateTime = default(DateTime);
+            string s = id.Substring(6, 6).Insert(4, "-").Insert(2, "-");
+            DateTime dateTime;
             return DateTime.TryParse(s, out dateTime);
         }
 
@@ -1175,29 +1147,29 @@ namespace Infrastructure.Crosscutting.Declaration
         #region Private Static Functions
 
         /// <summary>
-        /// Calls a method on an object
+        ///     Calls a method on an object
         /// </summary>
-        /// <param name="MethodName">Method name</param>
+        /// <param name="methodName">Method name</param>
         /// <param name="Object">Object to call the method on</param>
-        /// <param name="InputVariables">(Optional)input variables for the method</param>
+        /// <param name="inputVariables">(Optional)input variables for the method</param>
         /// <returns>The returned value of the method</returns>
-        private static object CallMethod(string MethodName, object Object, params object[] InputVariables)
+        private static object CallMethod(string methodName, object Object, params object[] inputVariables)
         {
-            if (string.IsNullOrEmpty(MethodName) || Object.IsNull())
+            if (string.IsNullOrEmpty(methodName) || Object.IsNull())
                 return null;
-            Type ObjectType = Object.GetType();
-            MethodInfo Method = null;
-            if (InputVariables.IsNotNull())
+            Type objectType = Object.GetType();
+            MethodInfo method;
+            if (inputVariables.IsNotNull())
             {
-                Type[] MethodInputTypes = new Type[InputVariables.Length];
-                for (int x = 0; x < InputVariables.Length; ++x)
-                    MethodInputTypes[x] = InputVariables[x].GetType();
-                Method = ObjectType.GetMethod(MethodName, MethodInputTypes);
-                if (Method != null)
-                    return Method.Invoke(Object, InputVariables);
+                var methodInputTypes = new Type[inputVariables.Length];
+                for (int x = 0; x < inputVariables.Length; ++x)
+                    methodInputTypes[x] = inputVariables[x].GetType();
+                method = objectType.GetMethod(methodName, methodInputTypes);
+                if (method != null)
+                    return method.Invoke(Object, inputVariables);
             }
-            Method = ObjectType.GetMethod(MethodName);
-            return Method.IsNull() ? null : Method.Invoke(Object, null);
+            method = objectType.GetMethod(methodName);
+            return method.IsNull() ? null : method.Invoke(Object, null);
         }
 
         #endregion
@@ -1211,29 +1183,31 @@ namespace Infrastructure.Crosscutting.Declaration
         #region CallMethod
 
         /// <summary>
-        /// Calls a method on an object
+        ///     Calls a method on an object
         /// </summary>
-        /// <param name="MethodName">Method name</param>
+        /// <param name="methodName">Method name</param>
         /// <param name="Object">Object to call the method on</param>
-        /// <param name="InputVariables">(Optional)input variables for the method</param>
-        /// <typeparam name="ReturnType">Return type expected</typeparam>
+        /// <param name="inputVariables">(Optional)input variables for the method</param>
+        /// <typeparam name="TReturnType">Return type expected</typeparam>
         /// <returns>The returned value of the method</returns>
-        public static ReturnType CallMethod<ReturnType>(this object Object, string MethodName, params object[] InputVariables)
+        public static TReturnType CallMethod<TReturnType>(this object Object, string methodName,
+                                                        params object[] inputVariables)
         {
             if (Object == null)
                 throw new ArgumentNullException("Object");
-            if (string.IsNullOrEmpty(MethodName))
-                throw new ArgumentNullException("MethodName");
-            if (InputVariables == null)
-                InputVariables = new object[0];
-            Type ObjectType = Object.GetType();
-            Type[] MethodInputTypes = new Type[InputVariables.Length];
-            for (int x = 0; x < InputVariables.Length; ++x)
-                MethodInputTypes[x] = InputVariables[x].GetType();
-            MethodInfo Method = ObjectType.GetMethod(MethodName, MethodInputTypes);
-            if (Method == null)
-                throw new NullReferenceException("Could not find method " + MethodName + " with the appropriate input variables.");
-            return (ReturnType)Method.Invoke(Object, InputVariables);
+            if (string.IsNullOrEmpty(methodName))
+                throw new ArgumentNullException("methodName");
+            if (inputVariables == null)
+                inputVariables = new object[0];
+            Type objectType = Object.GetType();
+            var methodInputTypes = new Type[inputVariables.Length];
+            for (int x = 0; x < inputVariables.Length; ++x)
+                methodInputTypes[x] = inputVariables[x].GetType();
+            MethodInfo method = objectType.GetMethod(methodName, methodInputTypes);
+            if (method == null)
+                throw new NullReferenceException("Could not find method " + methodName +
+                                                 " with the appropriate input variables.");
+            return (TReturnType) method.Invoke(Object, inputVariables);
         }
 
         #endregion
@@ -1241,30 +1215,30 @@ namespace Infrastructure.Crosscutting.Declaration
         #region CreateInstance
 
         /// <summary>
-        /// Creates an instance of the type and casts it to the specified type
+        ///     Creates an instance of the type and casts it to the specified type
         /// </summary>
-        /// <typeparam name="ClassType">Class type to return</typeparam>
-        /// <param name="Type">Type to create an instance of</param>
+        /// <typeparam name="TClassType">Class type to return</typeparam>
+        /// <param name="type">Type to create an instance of</param>
         /// <param name="args">Arguments sent into the constructor</param>
         /// <returns>The newly created instance of the type</returns>
-        public static ClassType CreateInstance<ClassType>(this Type Type, params object[] args)
+        public static TClassType CreateInstance<TClassType>(this Type type, params object[] args)
         {
-            if (Type == null)
-                throw new ArgumentNullException("Type");
-            return (ClassType)Type.CreateInstance(args);
+            if (type == null)
+                throw new ArgumentNullException("type");
+            return (TClassType) type.CreateInstance(args);
         }
 
         /// <summary>
-        /// Creates an instance of the type
+        ///     Creates an instance of the type
         /// </summary>
-        /// <param name="Type">Type to create an instance of</param>
+        /// <param name="type">Type to create an instance of</param>
         /// <param name="args">Arguments sent into the constructor</param>
         /// <returns>The newly created instance of the type</returns>
-        public static object CreateInstance(this Type Type, params object[] args)
+        public static object CreateInstance(this Type type, params object[] args)
         {
-            if (Type == null)
-                throw new ArgumentNullException("Type");
-            return Activator.CreateInstance(Type, args);
+            if (type == null)
+                throw new ArgumentNullException("type");
+            return Activator.CreateInstance(type, args);
         }
 
         #endregion
@@ -1272,65 +1246,80 @@ namespace Infrastructure.Crosscutting.Declaration
         #region DumpProperties
 
         /// <summary>
-        /// Dumps the property names and current values from an object
+        ///     Dumps the property names and current values from an object
         /// </summary>
         /// <param name="Object">Object to dunp</param>
-        /// <param name="HTMLOutput">Determines if the output should be HTML or not</param>
+        /// <param name="htmlOutput">Determines if the output should be HTML or not</param>
         /// <returns>An HTML formatted table containing the information about the object</returns>
-        public static string DumpProperties(this object Object, bool HTMLOutput = true)
+        public static string DumpProperties(this object Object, bool htmlOutput = true)
         {
             if (Object == null)
                 throw new ArgumentNullException("Object");
-            StringBuilder TempValue = new StringBuilder();
-            TempValue.Append(HTMLOutput ? "<table><thead><tr><th>Property Name</th><th>Property Value</th></tr></thead><tbody>" : "Property Name\t\t\t\tProperty Value");
-            Type ObjectType = Object.GetType();
-            foreach (PropertyInfo Property in ObjectType.GetProperties())
+            var tempValue = new StringBuilder();
+            tempValue.Append(htmlOutput
+                                 ? "<table><thead><tr><th>Property Name</th><th>Property Value</th></tr></thead><tbody>"
+                                 : "Property Name\t\t\t\tProperty Value");
+            Type objectType = Object.GetType();
+            foreach (PropertyInfo property in objectType.GetProperties())
             {
-                TempValue.Append(HTMLOutput ? "<tr><td>" : "").Append(Property.Name).Append(HTMLOutput ? "</td><td>" : "\t\t\t\t");
-                ParameterInfo[] Parameters = Property.GetIndexParameters();
-                if (Property.CanRead && Parameters.Length == 0)
+                tempValue.Append(htmlOutput ? "<tr><td>" : "")
+                         .Append(property.Name)
+                         .Append(htmlOutput ? "</td><td>" : "\t\t\t\t");
+                ParameterInfo[] parameters = property.GetIndexParameters();
+                if (property.CanRead && parameters.Length == 0)
                 {
                     try
                     {
-                        object Value = Property.GetValue(Object, null);
-                        TempValue.Append(Value == null ? "null" : Value.ToString());
+                        object value = property.GetValue(Object, null);
+                        tempValue.Append(value == null ? "null" : value.ToString());
                     }
-                    catch { }
+                    catch
+                    {
+                    }
                 }
-                TempValue.Append(HTMLOutput ? "</td></tr>" : "");
+                tempValue.Append(htmlOutput ? "</td></tr>" : "");
             }
-            TempValue.Append(HTMLOutput ? "</tbody></table>" : "");
-            return TempValue.ToString();
+            tempValue.Append(htmlOutput ? "</tbody></table>" : "");
+            return tempValue.ToString();
         }
 
         /// <summary>
-        /// Dumps the properties names and current values
-        /// from an object type (used for static classes)
+        ///     Dumps the properties names and current values
+        ///     from an object type (used for static classes)
         /// </summary>
-        /// <param name="ObjectType">Object type to dunp</param>
+        /// <param name="objectType">Object type to dunp</param>
+        /// <param name="htmlOutput"></param>
         /// <returns>An HTML formatted table containing the information about the object type</returns>
-        public static string DumpProperties(this Type ObjectType, bool HTMLOutput = true)
+        public static string DumpProperties(this Type objectType, bool htmlOutput = true)
         {
-            if (ObjectType == null)
-                throw new ArgumentNullException("ObjectType");
-            StringBuilder TempValue = new StringBuilder();
-            TempValue.Append(HTMLOutput ? "<table><thead><tr><th>Property Name</th><th>Property Value</th></tr></thead><tbody>" : "Property Name\t\t\t\tProperty Value");
-            PropertyInfo[] Properties = ObjectType.GetProperties();
-            foreach (PropertyInfo Property in Properties)
+            if (objectType == null)
+                throw new ArgumentNullException("objectType");
+            var tempValue = new StringBuilder();
+            tempValue.Append(htmlOutput
+                                 ? "<table><thead><tr><th>Property Name</th><th>Property Value</th></tr></thead><tbody>"
+                                 : "Property Name\t\t\t\tProperty Value");
+            PropertyInfo[] properties = objectType.GetProperties();
+            foreach (PropertyInfo property in properties)
             {
-                TempValue.Append(HTMLOutput ? "<tr><td>" : "").Append(Property.Name).Append(HTMLOutput ? "</td><td>" : "\t\t\t\t");
-                if (Property.GetIndexParameters().Length == 0)
+                tempValue.Append(htmlOutput ? "<tr><td>" : "")
+                         .Append(property.Name)
+                         .Append(htmlOutput ? "</td><td>" : "\t\t\t\t");
+                if (property.GetIndexParameters().Length == 0)
                 {
                     try
                     {
-                        TempValue.Append(Property.GetValue(null, null) == null ? "null" : Property.GetValue(null, null).ToString());
+                        tempValue.Append(property.GetValue(null, null) == null
+                                             ? "null"
+                                             : property.GetValue(null, null).ToString());
                     }
-                    catch { }
+                    catch
+                    {
+                    }
                 }
-                TempValue.Append(HTMLOutput ? "</td></tr>" : "");
+                tempValue.Append(htmlOutput ? "</td></tr>" : "");
             }
-            TempValue.Append(HTMLOutput ? "</tbody></table>" : "");
-            return TempValue.ToString();
+            tempValue.Append(htmlOutput ? "</tbody></table>" : "");
+            return tempValue.ToString();
         }
 
         #endregion
@@ -1338,15 +1327,15 @@ namespace Infrastructure.Crosscutting.Declaration
         #region GetAttribute
 
         /// <summary>
-        /// Gets the attribute from the item
+        ///     Gets the attribute from the item
         /// </summary>
         /// <typeparam name="T">Attribute type</typeparam>
-        /// <param name="Provider">Attribute provider</param>
-        /// <param name="Inherit">When true, it looks up the heirarchy chain for the inherited custom attributes</param>
+        /// <param name="provider">Attribute provider</param>
+        /// <param name="inherit">When true, it looks up the heirarchy chain for the inherited custom attributes</param>
         /// <returns>Attribute specified if it exists</returns>
-        public static T GetAttribute<T>(this ICustomAttributeProvider Provider, bool Inherit = true) where T : Attribute
+        public static T GetAttribute<T>(this ICustomAttributeProvider provider, bool inherit = true) where T : Attribute
         {
-            return Provider.IsDefined(typeof(T), Inherit) ? Provider.GetAttributes<T>(Inherit)[0] : default(T);
+            return provider.IsDefined(typeof (T), inherit) ? provider.GetAttributes<T>(inherit)[0] : default(T);
         }
 
         #endregion
@@ -1354,15 +1343,18 @@ namespace Infrastructure.Crosscutting.Declaration
         #region GetAttributes
 
         /// <summary>
-        /// Gets the attributes from the item
+        ///     Gets the attributes from the item
         /// </summary>
         /// <typeparam name="T">Attribute type</typeparam>
-        /// <param name="Provider">Attribute provider</param>
-        /// <param name="Inherit">When true, it looks up the heirarchy chain for the inherited custom attributes</param>
+        /// <param name="provider">Attribute provider</param>
+        /// <param name="inherit">When true, it looks up the heirarchy chain for the inherited custom attributes</param>
         /// <returns>Array of attributes</returns>
-        public static T[] GetAttributes<T>(this ICustomAttributeProvider Provider, bool Inherit = true) where T : Attribute
+        public static T[] GetAttributes<T>(this ICustomAttributeProvider provider, bool inherit = true)
+            where T : Attribute
         {
-            return Provider.IsDefined(typeof(T), Inherit) ? Provider.GetCustomAttributes(typeof(T), Inherit).ToArray(x => (T)x) : new T[0];
+            return provider.IsDefined(typeof (T), inherit)
+                       ? provider.GetCustomAttributes(typeof (T), inherit).ToArray(x => (T) x)
+                       : new T[0];
         }
 
         #endregion
@@ -1370,41 +1362,41 @@ namespace Infrastructure.Crosscutting.Declaration
         #region GetName
 
         /// <summary>
-        /// Returns the type's name (Actual C# name, not the funky version from
-        /// the Name property)
+        ///     Returns the type's name (Actual C# name, not the funky version from
+        ///     the Name property)
         /// </summary>
-        /// <param name="ObjectType">Type to get the name of</param>
+        /// <param name="objectType">Type to get the name of</param>
         /// <returns>string name of the type</returns>
-        public static string GetName(this Type ObjectType)
+        public static string GetName(this Type objectType)
         {
-            if (ObjectType == null)
-                throw new ArgumentNullException("ObjectType");
-            StringBuilder Output = new StringBuilder();
-            if (ObjectType.Name == "Void")
+            if (objectType == null)
+                throw new ArgumentNullException("objectType");
+            var output = new StringBuilder();
+            if (objectType.Name == "Void")
             {
-                Output.Append("void");
+                output.Append("void");
             }
             else
             {
-                if (ObjectType.Name.Contains("`"))
+                if (objectType.Name.Contains("`"))
                 {
-                    Type[] GenericTypes = ObjectType.GetGenericArguments();
-                    Output.Append(ObjectType.Name.Remove(ObjectType.Name.IndexOf("`")))
-                        .Append("<");
-                    string Seperator = "";
-                    foreach (Type GenericType in GenericTypes)
+                    Type[] genericTypes = objectType.GetGenericArguments();
+                    output.Append(objectType.Name.Remove(objectType.Name.IndexOf("`", StringComparison.Ordinal)))
+                          .Append("<");
+                    string seperator = "";
+                    foreach (Type genericType in genericTypes)
                     {
-                        Output.Append(Seperator).Append(GenericType.GetName());
-                        Seperator = ",";
+                        output.Append(seperator).Append(genericType.GetName());
+                        seperator = ",";
                     }
-                    Output.Append(">");
+                    output.Append(">");
                 }
                 else
                 {
-                    Output.Append(ObjectType.Name);
+                    output.Append(objectType.Name);
                 }
             }
-            return Output.ToString();
+            return output.ToString();
         }
 
         #endregion
@@ -1412,51 +1404,49 @@ namespace Infrastructure.Crosscutting.Declaration
         #region GetObjects
 
         /// <summary>
-        /// Returns an instance of all classes that it finds within an assembly
-        /// that are of the specified base type/interface.
+        ///     Returns an instance of all classes that it finds within an assembly
+        ///     that are of the specified base type/interface.
         /// </summary>
-        /// <typeparam name="ClassType">Base type/interface searching for</typeparam>
-        /// <param name="Assembly">Assembly to search within</param>
+        /// <typeparam name="TClassType">Base type/interface searching for</typeparam>
+        /// <param name="assembly">Assembly to search within</param>
         /// <returns>A list of objects that are of the type specified</returns>
-        public static IEnumerable<ClassType> GetObjects<ClassType>(this Assembly Assembly)
+        public static IEnumerable<TClassType> GetObjects<TClassType>(this Assembly assembly)
         {
-            if (Assembly == null)
-                throw new ArgumentNullException("Assembly");
-            System.Collections.Generic.List<ClassType> ReturnValues = new System.Collections.Generic.List<ClassType>();
-            foreach (Type Type in Assembly.GetTypes<ClassType>().Where(x => !x.ContainsGenericParameters))
-                ReturnValues.Add(Type.CreateInstance<ClassType>());
-            return ReturnValues;
+            if (assembly == null)
+                throw new ArgumentNullException("assembly");
+            return assembly.GetTypes<TClassType>().Where(x => !x.ContainsGenericParameters).Select(type => type.CreateInstance<TClassType>()).ToList();
         }
 
         /// <summary>
-        /// Returns an instance of all classes that it finds within a group of assemblies
-        /// that are of the specified base type/interface.
+        ///     Returns an instance of all classes that it finds within a group of assemblies
+        ///     that are of the specified base type/interface.
         /// </summary>
-        /// <typeparam name="ClassType">Base type/interface searching for</typeparam>
-        /// <param name="Assemblies">Assemblies to search within</param>
+        /// <typeparam name="TClassType">Base type/interface searching for</typeparam>
+        /// <param name="assemblies">Assemblies to search within</param>
         /// <returns>A list of objects that are of the type specified</returns>
-        public static IEnumerable<ClassType> GetObjects<ClassType>(this IEnumerable<Assembly> Assemblies)
+        public static IEnumerable<TClassType> GetObjects<TClassType>(this IEnumerable<Assembly> assemblies)
         {
-            if (Assemblies == null)
-                throw new ArgumentNullException("Assemblies");
-            List<ClassType> ReturnValues = new List<ClassType>();
-            foreach (Assembly Assembly in Assemblies)
-                ReturnValues.AddRange(Assembly.GetObjects<ClassType>());
-            return ReturnValues;
+            if (assemblies == null)
+                throw new ArgumentNullException("assemblies");
+            var returnValues = new List<TClassType>();
+            foreach (Assembly assembly in assemblies)
+                returnValues.AddRange(assembly.GetObjects<TClassType>());
+            return returnValues;
         }
 
         /// <summary>
-        /// Returns an instance of all classes that it finds within a directory
-        /// that are of the specified base type/interface.
+        ///     Returns an instance of all classes that it finds within a directory
+        ///     that are of the specified base type/interface.
         /// </summary>
-        /// <typeparam name="ClassType">Base type/interface searching for</typeparam>
-        /// <param name="Directory">Directory to search within</param>
+        /// <typeparam name="TClassType">Base type/interface searching for</typeparam>
+        /// <param name="directory">Directory to search within</param>
+        /// <param name="Recursive"></param>
         /// <returns>A list of objects that are of the type specified</returns>
-        public static IEnumerable<ClassType> GetObjects<ClassType>(this DirectoryInfo Directory, bool Recursive = false)
+        public static IEnumerable<TClassType> GetObjects<TClassType>(this DirectoryInfo directory, bool Recursive = false)
         {
-            if (Directory == null)
-                throw new ArgumentNullException("Directory");
-            return Directory.LoadAssemblies(Recursive).GetObjects<ClassType>();
+            if (directory == null)
+                throw new ArgumentNullException("directory");
+            return directory.LoadAssemblies(Recursive).GetObjects<TClassType>();
         }
 
         #endregion
@@ -1464,46 +1454,46 @@ namespace Infrastructure.Crosscutting.Declaration
         #region GetProperty
 
         /// <summary>
-        /// Gets the value of property
+        ///     Gets the value of property
         /// </summary>
         /// <param name="Object">The object to get the property of</param>
-        /// <param name="Property">The property to get</param>
+        /// <param name="property">The property to get</param>
         /// <returns>Returns the property's value</returns>
-        public static object GetProperty(this object Object, PropertyInfo Property)
+        public static object GetProperty(object Object, PropertyInfo property)
         {
             if (Object == null)
                 throw new ArgumentNullException("Object");
-            if (Property == null)
-                throw new ArgumentNullException("Property");
-            return Property.GetValue(Object, null);
+            if (property == null)
+                throw new ArgumentNullException("property");
+            return property.GetValue(Object, null);
         }
 
         /// <summary>
-        /// Gets the value of property
+        ///     Gets the value of property
         /// </summary>
         /// <param name="Object">The object to get the property of</param>
-        /// <param name="Property">The property to get</param>
+        /// <param name="property">The property to get</param>
         /// <returns>Returns the property's value</returns>
-        public static object GetProperty(this object Object, string Property)
+        public static object GetProperty(object Object, string property)
         {
             if (Object == null)
                 throw new ArgumentNullException("Object");
-            if (string.IsNullOrEmpty(Property))
-                throw new ArgumentNullException("Property");
-            string[] Properties = Property.Split(new string[] { "." }, StringSplitOptions.None);
-            object TempObject = Object;
-            Type TempObjectType = TempObject.GetType();
-            PropertyInfo DestinationProperty = null;
-            for (int x = 0; x < Properties.Length - 1; ++x)
+            if (string.IsNullOrEmpty(property))
+                throw new ArgumentNullException("property");
+            string[] properties = property.Split(new[] {"."}, StringSplitOptions.None);
+            object tempObject = Object;
+            Type tempObjectType = tempObject.GetType();
+            PropertyInfo destinationProperty;
+            for (int x = 0; x < properties.Length - 1; ++x)
             {
-                DestinationProperty = TempObjectType.GetProperty(Properties[x]);
-                TempObjectType = DestinationProperty.PropertyType;
-                TempObject = DestinationProperty.GetValue(TempObject, null);
-                if (TempObject == null)
+                destinationProperty = tempObjectType.GetProperty(properties[x]);
+                tempObjectType = destinationProperty.PropertyType;
+                tempObject = destinationProperty.GetValue(tempObject, null);
+                if (tempObject == null)
                     return null;
             }
-            DestinationProperty = TempObjectType.GetProperty(Properties[Properties.Length - 1]);
-            return TempObject.GetProperty(DestinationProperty);
+            destinationProperty = tempObjectType.GetProperty(properties[properties.Length - 1]);
+            return GetProperty(tempObject,destinationProperty);
         }
 
         #endregion
@@ -1511,37 +1501,38 @@ namespace Infrastructure.Crosscutting.Declaration
         #region GetPropertyGetter
 
         /// <summary>
-        /// Gets a lambda expression that calls a specific property's getter function
+        ///     Gets a lambda expression that calls a specific property's getter function
         /// </summary>
-        /// <typeparam name="ClassType">Class type</typeparam>
-        /// <typeparam name="DataType">Data type expecting</typeparam>
-        /// <param name="Property">Property</param>
+        /// <typeparam name="TClassType">Class type</typeparam>
+        /// <typeparam name="TDataType">Data type expecting</typeparam>
+        /// <param name="property">Property</param>
         /// <returns>A lambda expression that calls a specific property's getter function</returns>
-        public static Expression<Func<ClassType, DataType>> GetPropertyGetter<ClassType, DataType>(this PropertyInfo Property)
+        public static Expression<Func<TClassType, TDataType>> GetPropertyGetter<TClassType, TDataType>(
+            this PropertyInfo property)
         {
-            if (!IsOfType(Property.PropertyType, typeof(DataType)))
+            if (!IsOfType(property.PropertyType, typeof (TDataType)))
                 throw new ArgumentException("Property is not of the type specified");
-            if (!IsOfType(Property.DeclaringType, typeof(ClassType)))
+            if (!IsOfType(property.DeclaringType, typeof (TClassType)))
                 throw new ArgumentException("Property is not from the declaring class type specified");
-            ParameterExpression ObjectInstance = Expression.Parameter(Property.DeclaringType, "x");
-            MemberExpression PropertyGet = Expression.Property(ObjectInstance, Property);
-            if (Property.PropertyType != typeof(DataType))
+            ParameterExpression objectInstance = Expression.Parameter(type: property.DeclaringType, name: "x");
+            MemberExpression propertyGet = Expression.Property(objectInstance, property);
+            if (property.PropertyType != typeof (TDataType))
             {
-                UnaryExpression Convert = Expression.Convert(PropertyGet, typeof(DataType));
-                return Expression.Lambda<Func<ClassType, DataType>>(Convert, ObjectInstance);
+                UnaryExpression convert = Expression.Convert(propertyGet, typeof (TDataType));
+                return Expression.Lambda<Func<TClassType, TDataType>>(convert, objectInstance);
             }
-            return Expression.Lambda<Func<ClassType, DataType>>(PropertyGet, ObjectInstance);
+            return Expression.Lambda<Func<TClassType, TDataType>>(propertyGet, objectInstance);
         }
 
         /// <summary>
-        /// Gets a lambda expression that calls a specific property's getter function
+        ///     Gets a lambda expression that calls a specific property's getter function
         /// </summary>
-        /// <typeparam name="ClassType">Class type</typeparam>
-        /// <param name="Property">Property</param>
+        /// <typeparam name="TClassType">Class type</typeparam>
+        /// <param name="property">Property</param>
         /// <returns>A lambda expression that calls a specific property's getter function</returns>
-        public static Expression<Func<ClassType, object>> GetPropertyGetter<ClassType>(this PropertyInfo Property)
+        public static Expression<Func<TClassType, object>> GetPropertyGetter<TClassType>(this PropertyInfo property)
         {
-            return Property.GetPropertyGetter<ClassType, object>();
+            return property.GetPropertyGetter<TClassType, object>();
         }
 
         #endregion
@@ -1549,34 +1540,36 @@ namespace Infrastructure.Crosscutting.Declaration
         #region GetPropertyName
 
         /// <summary>
-        /// Gets a property name
+        ///     Gets a property name
         /// </summary>
-        /// <typeparam name="ClassType">Class type</typeparam>
-        /// <typeparam name="DataType">Data type of the property</typeparam>
-        /// <param name="Expression">LINQ expression</param>
+        /// <typeparam name="TClassType">Class type</typeparam>
+        /// <typeparam name="TDataType">Data type of the property</typeparam>
+        /// <param name="expression">LINQ expression</param>
         /// <returns>The name of the property</returns>
-        public static string GetPropertyName<ClassType, DataType>(this Expression<Func<ClassType, DataType>> Expression)
+        public static string GetPropertyName<TClassType, TDataType>(this Expression<Func<TClassType, TDataType>> expression)
         {
-            if (Expression.Body is UnaryExpression && Expression.Body.NodeType == ExpressionType.Convert)
+            if (expression.Body is UnaryExpression && expression.Body.NodeType == ExpressionType.Convert)
             {
-                MemberExpression Temp = (MemberExpression)((UnaryExpression)Expression.Body).Operand;
-                return GetPropertyName(Temp.Expression) + Temp.Member.Name;
+                var temp = (MemberExpression) ((UnaryExpression) expression.Body).Operand;
+                return GetPropertyName(temp.Expression) + temp.Member.Name;
             }
-            if (!(Expression.Body is MemberExpression))
+            if (!(expression.Body is MemberExpression))
                 throw new ArgumentException("Expression.Body is not a MemberExpression");
-            return ((MemberExpression)Expression.Body).Expression.GetPropertyName() + ((MemberExpression)Expression.Body).Member.Name;
+            return ((MemberExpression) expression.Body).Expression.GetPropertyName() +
+                   ((MemberExpression) expression.Body).Member.Name;
         }
 
         /// <summary>
-        /// Gets a property name
+        ///     Gets a property name
         /// </summary>
-        /// <param name="Expression">LINQ expression</param>
+        /// <param name="expression">LINQ expression</param>
         /// <returns>The name of the property</returns>
-        public static string GetPropertyName(this Expression Expression)
+        public static string GetPropertyName(this Expression expression)
         {
-            if (!(Expression is MemberExpression))
+            if (!(expression is MemberExpression))
                 return "";
-            return ((MemberExpression)Expression).Expression.GetPropertyName() + ((MemberExpression)Expression).Member.Name + ".";
+            return ((MemberExpression) expression).Expression.GetPropertyName() +
+                   ((MemberExpression) expression).Member.Name + ".";
         }
 
         #endregion
@@ -1584,40 +1577,43 @@ namespace Infrastructure.Crosscutting.Declaration
         #region GetPropertyType
 
         /// <summary>
-        /// Gets a property's type
+        ///     Gets a property's type
         /// </summary>
         /// <param name="Object">object who contains the property</param>
-        /// <param name="PropertyPath">Path of the property (ex: Prop1.Prop2.Prop3 would be
-        /// the Prop1 of the source object, which then has a Prop2 on it, which in turn
-        /// has a Prop3 on it.)</param>
+        /// <param name="propertyPath">
+        ///     Path of the property (ex: Prop1.Prop2.Prop3 would be
+        ///     the Prop1 of the source object, which then has a Prop2 on it, which in turn
+        ///     has a Prop3 on it.)
+        /// </param>
         /// <returns>The type of the property specified or null if it can not be reached.</returns>
-        public static Type GetPropertyType(this object Object, string PropertyPath)
+        public static Type GetPropertyType(object Object, string propertyPath)
         {
-            if (Object == null || string.IsNullOrEmpty(PropertyPath))
+            if (Object == null || string.IsNullOrEmpty(propertyPath))
                 return null;
-            return Object.GetType().GetPropertyType(PropertyPath);
+            return GetPropertyType(Object.GetType(),propertyPath);
         }
 
         /// <summary>
-        /// Gets a property's type
+        ///     Gets a property's type
         /// </summary>
-        /// <param name="ObjectType">Object type</param>
-        /// <param name="PropertyPath">Path of the property (ex: Prop1.Prop2.Prop3 would be
-        /// the Prop1 of the source object, which then has a Prop2 on it, which in turn
-        /// has a Prop3 on it.)</param>
+        /// <param name="objectType">Object type</param>
+        /// <param name="propertyPath">
+        ///     Path of the property (ex: Prop1.Prop2.Prop3 would be
+        ///     the Prop1 of the source object, which then has a Prop2 on it, which in turn
+        ///     has a Prop3 on it.)
+        /// </param>
         /// <returns>The type of the property specified or null if it can not be reached.</returns>
-        public static Type GetPropertyType(this Type ObjectType, string PropertyPath)
+        public static Type GetPropertyType(Type objectType, string propertyPath)
         {
-            if (ObjectType == null || string.IsNullOrEmpty(PropertyPath))
+            if (objectType == null || string.IsNullOrEmpty(propertyPath))
                 return null;
-            string[] SourceProperties = PropertyPath.Split(new string[] { "." }, StringSplitOptions.None);
-            PropertyInfo PropertyInfo = null;
-            for (int x = 0; x < SourceProperties.Length; ++x)
+            string[] sourceProperties = propertyPath.Split(new[] {"."}, StringSplitOptions.None);
+            for (int x = 0; x < sourceProperties.Length; ++x)
             {
-                PropertyInfo = ObjectType.GetProperty(SourceProperties[x]);
-                ObjectType = PropertyInfo.PropertyType;
+                PropertyInfo PropertyInfo = objectType.GetProperty(sourceProperties[x]);
+                objectType = PropertyInfo.PropertyType;
             }
-            return ObjectType;
+            return objectType;
         }
 
         #endregion
@@ -1625,56 +1621,57 @@ namespace Infrastructure.Crosscutting.Declaration
         #region GetPropertySetter
 
         /// <summary>
-        /// Gets a lambda expression that calls a specific property's setter function
+        ///     Gets a lambda expression that calls a specific property's setter function
         /// </summary>
-        /// <typeparam name="ClassType">Class type</typeparam>
-        /// <typeparam name="DataType">Data type expecting</typeparam>
-        /// <param name="PropertyName">Property name</param>
+        /// <typeparam name="TClassType">Class type</typeparam>
+        /// <typeparam name="TDataType">Data type expecting</typeparam>
         /// <returns>A lambda expression that calls a specific property's setter function</returns>
-        public static Expression<Action<ClassType, DataType>> GetPropertySetter<ClassType, DataType>(this Expression<Func<ClassType, DataType>> Property)
+        public static Expression<Action<TClassType, TDataType>> GetPropertySetter<TClassType, TDataType>(
+            this Expression<Func<TClassType, TDataType>> property)
         {
-            if (Property == null)
-                throw new ArgumentNullException("Property");
-            string PropertyName = Property.GetPropertyName();
-            string[] SplitName = PropertyName.Split(new string[] { "." }, StringSplitOptions.RemoveEmptyEntries);
-            PropertyInfo PropertyInfo = typeof(ClassType).GetProperty(SplitName[0]);
-            ParameterExpression ObjectInstance = Expression.Parameter(PropertyInfo.DeclaringType, "x");
-            ParameterExpression PropertySet = Expression.Parameter(typeof(DataType), "y");
+            if (property == null)
+                throw new ArgumentNullException("property");
+            string propertyName = property.GetPropertyName();
+            string[] splitName = propertyName.Split(new[] {"."}, StringSplitOptions.RemoveEmptyEntries);
+            PropertyInfo propertyInfo = typeof (TClassType).GetProperty(splitName[0]);
+            ParameterExpression objectInstance = Expression.Parameter(propertyInfo.DeclaringType, "x");
+            ParameterExpression PropertySet = Expression.Parameter(typeof (TDataType), "y");
             MethodCallExpression SetterCall = null;
             MemberExpression PropertyGet = null;
-            if (SplitName.Length > 1)
+            if (splitName.Length > 1)
             {
-                PropertyGet = Expression.Property(ObjectInstance, PropertyInfo);
-                for (int x = 1; x < SplitName.Length - 1; ++x)
+                PropertyGet = Expression.Property(objectInstance, propertyInfo);
+                for (int x = 1; x < splitName.Length - 1; ++x)
                 {
-                    PropertyInfo = PropertyInfo.PropertyType.GetProperty(SplitName[x]);
-                    PropertyGet = Expression.Property(PropertyGet, PropertyInfo);
+                    propertyInfo = propertyInfo.PropertyType.GetProperty(splitName[x]);
+                    PropertyGet = Expression.Property(PropertyGet, propertyInfo);
                 }
-                PropertyInfo = PropertyInfo.PropertyType.GetProperty(SplitName[SplitName.Length - 1]);
+                propertyInfo = propertyInfo.PropertyType.GetProperty(splitName[splitName.Length - 1]);
             }
-            if (PropertyInfo.PropertyType != typeof(DataType))
+            if (propertyInfo.PropertyType != typeof (TDataType))
             {
-                UnaryExpression Convert = Expression.Convert(PropertySet, PropertyInfo.PropertyType);
+                UnaryExpression Convert = Expression.Convert(PropertySet, propertyInfo.PropertyType);
                 if (PropertyGet == null)
-                    SetterCall = Expression.Call(ObjectInstance, PropertyInfo.GetSetMethod(), Convert);
+                    SetterCall = Expression.Call(objectInstance, propertyInfo.GetSetMethod(), Convert);
                 else
-                    SetterCall = Expression.Call(PropertyGet, PropertyInfo.GetSetMethod(), Convert);
-                return Expression.Lambda<Action<ClassType, DataType>>(SetterCall, ObjectInstance, PropertySet);
+                    SetterCall = Expression.Call(PropertyGet, propertyInfo.GetSetMethod(), Convert);
+                return Expression.Lambda<Action<TClassType, TDataType>>(SetterCall, objectInstance, PropertySet);
             }
             if (PropertyGet == null)
-                SetterCall = Expression.Call(ObjectInstance, PropertyInfo.GetSetMethod(), PropertySet);
+                SetterCall = Expression.Call(objectInstance, propertyInfo.GetSetMethod(), PropertySet);
             else
-                SetterCall = Expression.Call(PropertyGet, PropertyInfo.GetSetMethod(), PropertySet);
-            return Expression.Lambda<Action<ClassType, DataType>>(SetterCall, ObjectInstance, PropertySet);
+                SetterCall = Expression.Call(PropertyGet, propertyInfo.GetSetMethod(), PropertySet);
+            return Expression.Lambda<Action<TClassType, TDataType>>(SetterCall, objectInstance, PropertySet);
         }
 
         /// <summary>
-        /// Gets a lambda expression that calls a specific property's setter function
+        ///     Gets a lambda expression that calls a specific property's setter function
         /// </summary>
         /// <typeparam name="ClassType">Class type</typeparam>
         /// <param name="Property">Property</param>
         /// <returns>A lambda expression that calls a specific property's setter function</returns>
-        public static Expression<Action<ClassType, object>> GetPropertySetter<ClassType>(this Expression<Func<ClassType, object>> Property)
+        public static Expression<Action<ClassType, object>> GetPropertySetter<ClassType>(
+            this Expression<Func<ClassType, object>> Property)
         {
             return Property.GetPropertySetter<ClassType, object>();
         }
@@ -1684,7 +1681,7 @@ namespace Infrastructure.Crosscutting.Declaration
         #region GetTypes
 
         /// <summary>
-        /// Gets a list of types based on an interface
+        ///     Gets a list of types based on an interface
         /// </summary>
         /// <param name="Assembly">Assembly to check</param>
         /// <typeparam name="BaseType">Class type to search for</typeparam>
@@ -1693,11 +1690,11 @@ namespace Infrastructure.Crosscutting.Declaration
         {
             if (Assembly == null)
                 throw new ArgumentNullException("Assembly");
-            return Assembly.GetTypes(typeof(BaseType));
+            return Assembly.GetTypes(typeof (BaseType));
         }
 
         /// <summary>
-        /// Gets a list of types based on an interface
+        ///     Gets a list of types based on an interface
         /// </summary>
         /// <param name="Assembly">Assembly to check</param>
         /// <param name="BaseType">Base type to look for</param>
@@ -1712,7 +1709,7 @@ namespace Infrastructure.Crosscutting.Declaration
         }
 
         /// <summary>
-        /// Gets a list of types based on an interface
+        ///     Gets a list of types based on an interface
         /// </summary>
         /// <param name="Assemblies">Assemblies to check</param>
         /// <typeparam name="BaseType">Class type to search for</typeparam>
@@ -1721,11 +1718,11 @@ namespace Infrastructure.Crosscutting.Declaration
         {
             if (Assemblies == null)
                 throw new ArgumentNullException("Assemblies");
-            return Assemblies.GetTypes(typeof(BaseType));
+            return Assemblies.GetTypes(typeof (BaseType));
         }
 
         /// <summary>
-        /// Gets a list of types based on an interface
+        ///     Gets a list of types based on an interface
         /// </summary>
         /// <param name="Assemblies">Assemblies to check</param>
         /// <param name="BaseType">Base type to look for</param>
@@ -1736,7 +1733,7 @@ namespace Infrastructure.Crosscutting.Declaration
                 throw new ArgumentNullException("Assemblies");
             if (BaseType == null)
                 throw new ArgumentNullException("BaseType");
-            List<Type> ReturnValues = new List<Type>();
+            var ReturnValues = new List<Type>();
             Assemblies.ForEach(y => ReturnValues.AddRange(y.GetTypes(BaseType)));
             return ReturnValues;
         }
@@ -1746,13 +1743,13 @@ namespace Infrastructure.Crosscutting.Declaration
         #region IsIEnumerable
 
         /// <summary>
-        /// Simple function to determine if an item is an IEnumerable
+        ///     Simple function to determine if an item is an IEnumerable
         /// </summary>
         /// <param name="ObjectType">Object type</param>
         /// <returns>True if it is, false otherwise</returns>
         public static bool IsIEnumerable(this Type ObjectType)
         {
-            return ObjectType.IsOfType(typeof(IEnumerable));
+            return ObjectType.IsOfType(typeof (IEnumerable));
         }
 
         #endregion
@@ -1760,37 +1757,37 @@ namespace Infrastructure.Crosscutting.Declaration
         #region IsOfType
 
         /// <summary>
-        /// Determines if an object is of a specific type
+        ///     Determines if an object is of a specific type
         /// </summary>
         /// <param name="Object">Object</param>
-        /// <param name="Type">Type</param>
+        /// <param name="type">Type</param>
         /// <returns>True if it is, false otherwise</returns>
-        public static bool IsOfType(this object Object, Type Type)
+        public static bool IsOfType(this object Object, Type type)
         {
             if (Object == null)
                 throw new ArgumentNullException("Object");
-            if (Type == null)
-                throw new ArgumentNullException("Type");
-            return Object.GetType().IsOfType(Type);
+            if (type == null)
+                throw new ArgumentNullException("type");
+            return Object.GetType().IsOfType(type);
         }
 
         /// <summary>
-        /// Determines if an object is of a specific type
+        ///     Determines if an object is of a specific type
         /// </summary>
         /// <param name="ObjectType">Object type</param>
-        /// <param name="Type">Type</param>
+        /// <param name="type">Type</param>
         /// <returns>True if it is, false otherwise</returns>
-        public static bool IsOfType(this Type ObjectType, Type Type)
+        public static bool IsOfType(this Type ObjectType, Type type)
         {
             if (ObjectType == null)
                 return false;
-            if (Type == null)
-                throw new ArgumentNullException("Type");
-            if (Type == ObjectType || ObjectType.GetInterface(Type.Name, true) != null)
+            if (type == null)
+                throw new ArgumentNullException("type");
+            if (type == ObjectType || ObjectType.GetInterface(type.Name, true) != null)
                 return true;
             if (ObjectType.BaseType == null)
                 return false;
-            return ObjectType.BaseType.IsOfType(Type);
+            return ObjectType.BaseType.IsOfType(type);
         }
 
         #endregion
@@ -1798,11 +1795,11 @@ namespace Infrastructure.Crosscutting.Declaration
         #region Load
 
         /// <summary>
-        /// Loads an assembly by its name
+        ///     Loads an assembly by its name
         /// </summary>
         /// <param name="Name">Name of the assembly to return</param>
         /// <returns>The assembly specified if it exists</returns>
-        public static System.Reflection.Assembly Load(this AssemblyName Name)
+        public static Assembly Load(this AssemblyName Name)
         {
             Name.ThrowIfNull("Name");
             return AppDomain.CurrentDomain.Load(Name);
@@ -1813,14 +1810,17 @@ namespace Infrastructure.Crosscutting.Declaration
         #region LoadAssemblies
 
         /// <summary>
-        /// Loads assemblies within a directory and returns them in an array.
+        ///     Loads assemblies within a directory and returns them in an array.
         /// </summary>
         /// <param name="Directory">The directory to search in</param>
         /// <param name="Recursive">Determines whether to search recursively or not</param>
         /// <returns>Array of assemblies in the directory</returns>
         public static IEnumerable<Assembly> LoadAssemblies(this DirectoryInfo Directory, bool Recursive = false)
         {
-            foreach (FileInfo File in Directory.GetFiles("*.dll", Recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly))
+            foreach (
+                FileInfo File in
+                    Directory.GetFiles("*.dll", Recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly)
+                )
                 yield return AssemblyName.GetAssemblyName(File.FullName).Load();
         }
 
@@ -1829,17 +1829,18 @@ namespace Infrastructure.Crosscutting.Declaration
         #region MarkedWith
 
         /// <summary>
-        /// Goes through a list of types and determines if they're marked with a specific attribute
+        ///     Goes through a list of types and determines if they're marked with a specific attribute
         /// </summary>
         /// <typeparam name="T">Attribute type</typeparam>
         /// <param name="Types">Types to check</param>
         /// <param name="Inherit">When true, it looks up the heirarchy chain for the inherited custom attributes</param>
         /// <returns>The list of types that are marked with an attribute</returns>
-        public static IEnumerable<Type> MarkedWith<T>(this IEnumerable<Type> Types, bool Inherit = true) where T : Attribute
+        public static IEnumerable<Type> MarkedWith<T>(this IEnumerable<Type> Types, bool Inherit = true)
+            where T : Attribute
         {
             if (Types == null)
                 return null;
-            return Types.Where(x => x.IsDefined(typeof(T), Inherit) && !x.IsAbstract);
+            return Types.Where(x => x.IsDefined(typeof (T), Inherit) && !x.IsAbstract);
         }
 
         #endregion
@@ -1847,7 +1848,7 @@ namespace Infrastructure.Crosscutting.Declaration
         #region MakeShallowCopy
 
         /// <summary>
-        /// Makes a shallow copy of the object
+        ///     Makes a shallow copy of the object
         /// </summary>
         /// <param name="Object">Object to copy</param>
         /// <param name="SimpleTypesOnly">If true, it only copies simple types (no classes, only items like int, string, etc.), false copies everything.</param>
@@ -1857,22 +1858,24 @@ namespace Infrastructure.Crosscutting.Declaration
             if (Object == null)
                 return default(T);
             Type ObjectType = Object.GetType();
-            T ClassInstance = ObjectType.CreateInstance<T>();
+            var ClassInstance = ObjectType.CreateInstance<T>();
             foreach (PropertyInfo Property in ObjectType.GetProperties())
             {
                 try
                 {
                     if (Property.CanRead
-                            && Property.CanWrite
-                            && SimpleTypesOnly
-                            && Property.PropertyType.IsValueType)
+                        && Property.CanWrite
+                        && SimpleTypesOnly
+                        && Property.PropertyType.IsValueType)
                         Property.SetValue(ClassInstance, Property.GetValue(Object, null), null);
                     else if (!SimpleTypesOnly
-                                && Property.CanRead
-                                && Property.CanWrite)
+                             && Property.CanRead
+                             && Property.CanWrite)
                         Property.SetValue(ClassInstance, Property.GetValue(Object, null), null);
                 }
-                catch { }
+                catch
+                {
+                }
             }
 
             foreach (FieldInfo Field in ObjectType.GetFields())
@@ -1884,7 +1887,9 @@ namespace Infrastructure.Crosscutting.Declaration
                     else if (!SimpleTypesOnly && Field.IsPublic)
                         Field.SetValue(ClassInstance, Field.GetValue(Object));
                 }
-                catch { }
+                catch
+                {
+                }
             }
 
             return ClassInstance;
@@ -1895,13 +1900,13 @@ namespace Infrastructure.Crosscutting.Declaration
         #region SetProperty
 
         /// <summary>
-        /// Sets the value of destination property
+        ///     Sets the value of destination property
         /// </summary>
         /// <param name="Object">The object to set the property of</param>
         /// <param name="Property">The property to set</param>
         /// <param name="Value">Value to set the property to</param>
         /// <param name="Format">Allows for formatting if the destination is a string</param>
-        public static object SetProperty(this object Object, PropertyInfo Property, object Value, string Format = "")
+        public static object SetProperty(object Object, PropertyInfo Property, object Value, string Format = "")
         {
             if (Object == null)
                 throw new ArgumentNullException("Object");
@@ -1909,8 +1914,8 @@ namespace Infrastructure.Crosscutting.Declaration
                 throw new ArgumentNullException("Property");
             if (Value == null)
                 throw new ArgumentNullException("Value");
-            if (Property.PropertyType == typeof(string))
-                Value = Value.FormatToString(Format);
+            if (Property.PropertyType == typeof (string))
+                Value = FormatToString(Value,Format);
             if (!Value.GetType().IsOfType(Property.PropertyType))
                 Value = Convert.ChangeType(Value, Property.PropertyType);
             Property.SetValue(Object, Value, null);
@@ -1918,13 +1923,13 @@ namespace Infrastructure.Crosscutting.Declaration
         }
 
         /// <summary>
-        /// Sets the value of destination property
+        ///     Sets the value of destination property
         /// </summary>
         /// <param name="Object">The object to set the property of</param>
         /// <param name="Property">The property to set</param>
         /// <param name="Value">Value to set the property to</param>
         /// <param name="Format">Allows for formatting if the destination is a string</param>
-        public static object SetProperty(this object Object, string Property, object Value, string Format = "")
+        public static object SetProperty(object Object, string Property, object Value, string Format = "")
         {
             if (Object == null)
                 throw new ArgumentNullException("Object");
@@ -1932,7 +1937,7 @@ namespace Infrastructure.Crosscutting.Declaration
                 throw new ArgumentNullException("Property");
             if (Value == null)
                 throw new ArgumentNullException("Value");
-            string[] Properties = Property.Split(new string[] { "." }, StringSplitOptions.None);
+            string[] Properties = Property.Split(new[] {"."}, StringSplitOptions.None);
             object TempObject = Object;
             Type TempObjectType = TempObject.GetType();
             PropertyInfo DestinationProperty = null;
@@ -1945,7 +1950,7 @@ namespace Infrastructure.Crosscutting.Declaration
                     return Object;
             }
             DestinationProperty = TempObjectType.GetProperty(Properties[Properties.Length - 1]);
-            TempObject.SetProperty(DestinationProperty, Value, Format);
+            SetProperty(TempObject,DestinationProperty, Value, Format);
             return Object;
         }
 
@@ -1954,7 +1959,7 @@ namespace Infrastructure.Crosscutting.Declaration
         #region ToLongVersionString
 
         /// <summary>
-        /// Gets the long version of the version information
+        ///     Gets the long version of the version information
         /// </summary>
         /// <param name="Assembly">Assembly to get version information from</param>
         /// <returns>The long version of the version information</returns>
@@ -1970,7 +1975,7 @@ namespace Infrastructure.Crosscutting.Declaration
         #region ToShortVersionString
 
         /// <summary>
-        /// Gets the short version of the version information
+        ///     Gets the short version of the version information
         /// </summary>
         /// <param name="Assembly">Assembly to get version information from</param>
         /// <returns>The short version of the version information</returns>
@@ -1995,7 +2000,7 @@ namespace Infrastructure.Crosscutting.Declaration
         #region Between
 
         /// <summary>
-        /// Checks if an item is between two values
+        ///     Checks if an item is between two values
         /// </summary>
         /// <typeparam name="T">Type of the value</typeparam>
         /// <param name="Value">Value to check</param>
@@ -2020,7 +2025,7 @@ namespace Infrastructure.Crosscutting.Declaration
         #region NullCheck
 
         /// <summary>
-        /// Does a null check and either returns the default value (if it is null) or the object
+        ///     Does a null check and either returns the default value (if it is null) or the object
         /// </summary>
         /// <typeparam name="T">Object type</typeparam>
         /// <param name="Object">Object to check</param>
@@ -2036,7 +2041,7 @@ namespace Infrastructure.Crosscutting.Declaration
         #region IsNotDefault
 
         /// <summary>
-        /// Determines if the object is not null
+        ///     Determines if the object is not null
         /// </summary>
         /// <typeparam name="T">Object type</typeparam>
         /// <param name="Object">The object to check</param>
@@ -2052,7 +2057,7 @@ namespace Infrastructure.Crosscutting.Declaration
         #region IsDefault
 
         /// <summary>
-        /// Determines if the object is null
+        ///     Determines if the object is null
         /// </summary>
         /// <typeparam name="T">Object type</typeparam>
         /// <param name="Object">The object to check</param>
@@ -2068,7 +2073,7 @@ namespace Infrastructure.Crosscutting.Declaration
         #region ThrowIfDefault
 
         /// <summary>
-        /// Determines if the object is equal to default value and throws an ArgumentNullException if it is
+        ///     Determines if the object is equal to default value and throws an ArgumentNullException if it is
         /// </summary>
         /// <param name="Item">The object to check</param>
         /// <param name="EqualityComparer">Equality comparer used to determine if the object is equal to default</param>
@@ -2088,7 +2093,7 @@ namespace Infrastructure.Crosscutting.Declaration
         #region ToSQLDbType
 
         /// <summary>
-        /// Converts a .Net type to SQLDbType value
+        ///     Converts a .Net type to SQLDbType value
         /// </summary>
         /// <param name="Type">.Net Type</param>
         /// <returns>The corresponding SQLDbType</returns>
@@ -2098,13 +2103,13 @@ namespace Infrastructure.Crosscutting.Declaration
         }
 
         /// <summary>
-        /// Converts a DbType to a SqlDbType
+        ///     Converts a DbType to a SqlDbType
         /// </summary>
         /// <param name="Type">Type to convert</param>
         /// <returns>The corresponding SqlDbType (if it exists)</returns>
         public static SqlDbType ToSqlDbType(this DbType Type)
         {
-            SqlParameter Parameter = new SqlParameter();
+            var Parameter = new SqlParameter();
             Parameter.DbType = Type;
             return Parameter.SqlDbType;
         }
@@ -2114,57 +2119,57 @@ namespace Infrastructure.Crosscutting.Declaration
         #region ToDbType
 
         /// <summary>
-        /// Converts a .Net type to DbType value
+        ///     Converts a .Net type to DbType value
         /// </summary>
         /// <param name="Type">.Net Type</param>
         /// <returns>The corresponding DbType</returns>
         public static DbType ToDbType(this Type Type)
         {
-            if (Type == typeof(byte)) return DbType.Byte;
-            else if (Type == typeof(sbyte)) return DbType.SByte;
-            else if (Type == typeof(short)) return DbType.Int16;
-            else if (Type == typeof(ushort)) return DbType.UInt16;
-            else if (Type == typeof(int)) return DbType.Int32;
-            else if (Type == typeof(uint)) return DbType.UInt32;
-            else if (Type == typeof(long)) return DbType.Int64;
-            else if (Type == typeof(ulong)) return DbType.UInt64;
-            else if (Type == typeof(float)) return DbType.Single;
-            else if (Type == typeof(double)) return DbType.Double;
-            else if (Type == typeof(decimal)) return DbType.Decimal;
-            else if (Type == typeof(bool)) return DbType.Boolean;
-            else if (Type == typeof(string)) return DbType.String;
-            else if (Type == typeof(char)) return DbType.StringFixedLength;
-            else if (Type == typeof(Guid)) return DbType.Guid;
-            else if (Type == typeof(DateTime)) return DbType.DateTime2;
-            else if (Type == typeof(DateTimeOffset)) return DbType.DateTimeOffset;
-            else if (Type == typeof(byte[])) return DbType.Binary;
-            else if (Type == typeof(byte?)) return DbType.Byte;
-            else if (Type == typeof(sbyte?)) return DbType.SByte;
-            else if (Type == typeof(short?)) return DbType.Int16;
-            else if (Type == typeof(ushort?)) return DbType.UInt16;
-            else if (Type == typeof(int?)) return DbType.Int32;
-            else if (Type == typeof(uint?)) return DbType.UInt32;
-            else if (Type == typeof(long?)) return DbType.Int64;
-            else if (Type == typeof(ulong?)) return DbType.UInt64;
-            else if (Type == typeof(float?)) return DbType.Single;
-            else if (Type == typeof(double?)) return DbType.Double;
-            else if (Type == typeof(decimal?)) return DbType.Decimal;
-            else if (Type == typeof(bool?)) return DbType.Boolean;
-            else if (Type == typeof(char?)) return DbType.StringFixedLength;
-            else if (Type == typeof(Guid?)) return DbType.Guid;
-            else if (Type == typeof(DateTime?)) return DbType.DateTime2;
-            else if (Type == typeof(DateTimeOffset?)) return DbType.DateTimeOffset;
+            if (Type == typeof (byte)) return DbType.Byte;
+            else if (Type == typeof (sbyte)) return DbType.SByte;
+            else if (Type == typeof (short)) return DbType.Int16;
+            else if (Type == typeof (ushort)) return DbType.UInt16;
+            else if (Type == typeof (int)) return DbType.Int32;
+            else if (Type == typeof (uint)) return DbType.UInt32;
+            else if (Type == typeof (long)) return DbType.Int64;
+            else if (Type == typeof (ulong)) return DbType.UInt64;
+            else if (Type == typeof (float)) return DbType.Single;
+            else if (Type == typeof (double)) return DbType.Double;
+            else if (Type == typeof (decimal)) return DbType.Decimal;
+            else if (Type == typeof (bool)) return DbType.Boolean;
+            else if (Type == typeof (string)) return DbType.String;
+            else if (Type == typeof (char)) return DbType.StringFixedLength;
+            else if (Type == typeof (Guid)) return DbType.Guid;
+            else if (Type == typeof (DateTime)) return DbType.DateTime2;
+            else if (Type == typeof (DateTimeOffset)) return DbType.DateTimeOffset;
+            else if (Type == typeof (byte[])) return DbType.Binary;
+            else if (Type == typeof (byte?)) return DbType.Byte;
+            else if (Type == typeof (sbyte?)) return DbType.SByte;
+            else if (Type == typeof (short?)) return DbType.Int16;
+            else if (Type == typeof (ushort?)) return DbType.UInt16;
+            else if (Type == typeof (int?)) return DbType.Int32;
+            else if (Type == typeof (uint?)) return DbType.UInt32;
+            else if (Type == typeof (long?)) return DbType.Int64;
+            else if (Type == typeof (ulong?)) return DbType.UInt64;
+            else if (Type == typeof (float?)) return DbType.Single;
+            else if (Type == typeof (double?)) return DbType.Double;
+            else if (Type == typeof (decimal?)) return DbType.Decimal;
+            else if (Type == typeof (bool?)) return DbType.Boolean;
+            else if (Type == typeof (char?)) return DbType.StringFixedLength;
+            else if (Type == typeof (Guid?)) return DbType.Guid;
+            else if (Type == typeof (DateTime?)) return DbType.DateTime2;
+            else if (Type == typeof (DateTimeOffset?)) return DbType.DateTimeOffset;
             return DbType.Int32;
         }
 
         /// <summary>
-        /// Converts SqlDbType to DbType
+        ///     Converts SqlDbType to DbType
         /// </summary>
         /// <param name="Type">Type to convert</param>
         /// <returns>The corresponding DbType (if it exists)</returns>
         public static DbType ToDbType(this SqlDbType Type)
         {
-            SqlParameter Parameter = new SqlParameter();
+            var Parameter = new SqlParameter();
             Parameter.SqlDbType = Type;
             return Parameter.DbType;
         }
@@ -2174,7 +2179,7 @@ namespace Infrastructure.Crosscutting.Declaration
         #region ToType
 
         /// <summary>
-        /// Converts a SQLDbType value to .Net type
+        ///     Converts a SQLDbType value to .Net type
         /// </summary>
         /// <param name="Type">SqlDbType Type</param>
         /// <returns>The corresponding .Net type</returns>
@@ -2184,36 +2189,36 @@ namespace Infrastructure.Crosscutting.Declaration
         }
 
         /// <summary>
-        /// Converts a DbType value to .Net type
+        ///     Converts a DbType value to .Net type
         /// </summary>
         /// <param name="Type">DbType</param>
         /// <returns>The corresponding .Net type</returns>
         public static Type ToType(this DbType Type)
         {
-            if (Type == DbType.Byte) return typeof(byte);
-            else if (Type == DbType.SByte) return typeof(sbyte);
-            else if (Type == DbType.Int16) return typeof(short);
-            else if (Type == DbType.UInt16) return typeof(ushort);
-            else if (Type == DbType.Int32) return typeof(int);
-            else if (Type == DbType.UInt32) return typeof(uint);
-            else if (Type == DbType.Int64) return typeof(long);
-            else if (Type == DbType.UInt64) return typeof(ulong);
-            else if (Type == DbType.Single) return typeof(float);
-            else if (Type == DbType.Double) return typeof(double);
-            else if (Type == DbType.Decimal) return typeof(decimal);
-            else if (Type == DbType.Boolean) return typeof(bool);
-            else if (Type == DbType.String) return typeof(string);
-            else if (Type == DbType.StringFixedLength) return typeof(char);
-            else if (Type == DbType.Guid) return typeof(Guid);
-            else if (Type == DbType.DateTime2) return typeof(DateTime);
-            else if (Type == DbType.DateTime) return typeof(DateTime);
-            else if (Type == DbType.DateTimeOffset) return typeof(DateTimeOffset);
-            else if (Type == DbType.Binary) return typeof(byte[]);
-            return typeof(int);
+            if (Type == DbType.Byte) return typeof (byte);
+            else if (Type == DbType.SByte) return typeof (sbyte);
+            else if (Type == DbType.Int16) return typeof (short);
+            else if (Type == DbType.UInt16) return typeof (ushort);
+            else if (Type == DbType.Int32) return typeof (int);
+            else if (Type == DbType.UInt32) return typeof (uint);
+            else if (Type == DbType.Int64) return typeof (long);
+            else if (Type == DbType.UInt64) return typeof (ulong);
+            else if (Type == DbType.Single) return typeof (float);
+            else if (Type == DbType.Double) return typeof (double);
+            else if (Type == DbType.Decimal) return typeof (decimal);
+            else if (Type == DbType.Boolean) return typeof (bool);
+            else if (Type == DbType.String) return typeof (string);
+            else if (Type == DbType.StringFixedLength) return typeof (char);
+            else if (Type == DbType.Guid) return typeof (Guid);
+            else if (Type == DbType.DateTime2) return typeof (DateTime);
+            else if (Type == DbType.DateTime) return typeof (DateTime);
+            else if (Type == DbType.DateTimeOffset) return typeof (DateTimeOffset);
+            else if (Type == DbType.Binary) return typeof (byte[]);
+            return typeof (int);
         }
 
         #endregion
-         
+
         #endregion
 
         //public static class IEnumerableExtensions
@@ -2244,7 +2249,7 @@ namespace Infrastructure.Crosscutting.Declaration
 
 
     public static class BasicTypeExtensions
-    { 
+    {
         //public static bool HasValue(this UniqueId source)
         //{
         //    return source.Value != Guid.Empty;
