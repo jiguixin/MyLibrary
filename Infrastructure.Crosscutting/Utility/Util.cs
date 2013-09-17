@@ -15,8 +15,7 @@ namespace Infrastructure.Crosscutting.Utility
         public static T[] TableToArray<T>(DataTable dt, string colName)
         {
             T[] result = new T[dt.Rows.Count];
-            for (int i = 0; i < dt.Rows.Count; i++)
-                result[i] = (T)dt.Rows[i][colName];
+            for (int i = 0; i < dt.Rows.Count; i++) result[i] = (T)dt.Rows[i][colName];
 
             return result;
         }
@@ -25,7 +24,9 @@ namespace Infrastructure.Crosscutting.Utility
         {
             Type clsType = instance.GetType();
 
-            FieldInfo evtField = clsType.GetField(eventName, BindingFlags.GetField | BindingFlags.NonPublic | BindingFlags.Instance);
+            FieldInfo evtField = clsType.GetField(
+                eventName,
+                BindingFlags.GetField | BindingFlags.NonPublic | BindingFlags.Instance);
 
             return evtField.GetValue(instance) != null;
         }
@@ -42,20 +43,15 @@ namespace Infrastructure.Crosscutting.Utility
 
         public static object ConvertByType(PropertyInfo pi, string val)
         {
-            if (string.IsNullOrEmpty(val))
-                return null;
+            if (string.IsNullOrEmpty(val)) return null;
 
             Type targetType = pi.PropertyType;
-            if (Util.IsNullable(targetType))
-                targetType = Util.Nullable2ValueType(targetType);
+            if (Util.IsNullable(targetType)) targetType = Util.Nullable2ValueType(targetType);
 
             // enum要做特殊处理
-            if (targetType.IsEnum)
-                return Enum.ToObject(targetType, byte.Parse(val));
-            else if (targetType == typeof(bool))
-                return val == "1";
-            else
-                return Convert.ChangeType(val, targetType);
+            if (targetType.IsEnum) return Enum.ToObject(targetType, byte.Parse(val));
+            else if (targetType == typeof(bool)) return val == "1";
+            else return Convert.ChangeType(val, targetType);
         }
 
         /// <summary>
@@ -93,6 +89,86 @@ namespace Infrastructure.Crosscutting.Utility
             secuentialGuid[10] = binDate[7];
 
             return new Guid(secuentialGuid);
+        }
+
+        /// <summary>
+        /// 按时间生成相应的SysId,使其可以具体可排序性
+        /// 生成格式为：年月日时分秒毫秒+5位不重复随机码
+        /// </summary>
+        /// <returns></returns>
+        public static string NewId()
+        { 
+            Random ran = new Random(Guid.NewGuid().GetHashCode());
+              
+           return string.Format("{0}{1}", DateTime.Now.ToString("yyyyMMddHHmmss"), ran.Next(10000, 99999));
+        }
+
+
+        ///<summary>
+        /// 返回 GUID 用于数据库操作，特定的时间代码可以提高检索效率
+        /// </summary>
+        /// <returns>COMB (GUID 与时间混合型) 类型 GUID 数据</returns>
+        public static Guid NewComb()
+        {
+            byte[] guidArray = Guid.NewGuid().ToByteArray();
+
+            DateTime baseDate = new DateTime(1900, 1, 1);
+            DateTime now = DateTime.Now;
+
+            // Get the days and milliseconds which will be used to build    
+            //the byte string    
+            TimeSpan days = new TimeSpan(now.Ticks - baseDate.Ticks);
+            TimeSpan msecs = now.TimeOfDay;
+
+            // Convert to a byte array        
+            // Note that SQL Server is accurate to 1/300th of a    
+            // millisecond so we divide by 3.333333    
+            byte[] daysArray = BitConverter.GetBytes(days.Days);
+            byte[] msecsArray = BitConverter.GetBytes((long)
+              (msecs.TotalMilliseconds / 3.333333));
+
+            // Reverse the bytes to match SQL Servers ordering    
+            Array.Reverse(daysArray);
+            Array.Reverse(msecsArray);
+
+            // Copy the bytes into the guid    
+            Array.Copy(daysArray, daysArray.Length - 2, guidArray,
+              guidArray.Length - 6, 2);
+            Array.Copy(msecsArray, msecsArray.Length - 4, guidArray,
+              guidArray.Length - 4, 4);
+
+            return new Guid(guidArray);
+        }
+
+        //================================================================
+        /// <summary>
+        /// 从 SQL SERVER 返回的 GUID 中生成时间信息
+        /// </summary>
+        /// <param name="guid">包含时间信息的 COMB </param>
+        /// <returns>时间</returns>
+        public static DateTime GetDateFromComb(System.Guid guid)
+        {
+            DateTime baseDate = new DateTime(1900, 1, 1);
+            byte[] daysArray = new byte[4];
+            byte[] msecsArray = new byte[4];
+            byte[] guidArray = guid.ToByteArray();
+
+            // Copy the date parts of the guid to the respective byte arrays. 
+            Array.Copy(guidArray, guidArray.Length - 6, daysArray, 2, 2);
+            Array.Copy(guidArray, guidArray.Length - 4, msecsArray, 0, 4);
+
+            // Reverse the arrays to put them into the appropriate order 
+            Array.Reverse(daysArray);
+            Array.Reverse(msecsArray);
+
+            // Convert the bytes to ints 
+            int days = BitConverter.ToInt32(daysArray, 0);
+            int msecs = BitConverter.ToInt32(msecsArray, 0);
+
+            DateTime date = baseDate.AddDays(days);
+            date = date.AddMilliseconds(msecs * 3.333333);
+
+            return date;
         }
 
         #region 对DataRow的数据处理
