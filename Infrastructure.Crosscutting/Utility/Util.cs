@@ -100,7 +100,7 @@ namespace Infrastructure.Crosscutting.Utility
         { 
             Random ran = new Random(Guid.NewGuid().GetHashCode());
               
-           return string.Format("{0}{1}", DateTime.Now.ToString("yyyyMMddHHmmss"), ran.Next(10000, 99999));
+           return string.Format("{0}{1}", DateTime.Now.ToString("yyyyMMddHHmmssfff"), ran.Next(10000, 99999));
         }
 
 
