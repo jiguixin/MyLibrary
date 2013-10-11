@@ -43,7 +43,7 @@ namespace Infrastructure.CrossCutting.Web.Mvc.Core.Json
 
             HttpResponseBase response = context.HttpContext.Response;
 
-            if (string.IsNullOrEmpty(this.ContentType))
+            if (!string.IsNullOrEmpty(this.ContentType))
             {
                 response.ContentType = this.ContentType;
             }
