@@ -336,7 +336,7 @@ namespace Infrastructure.Crosscutting.Declaration
                 @"((https?|ftp|gopher|telnet|file|notes|ms-help):((//)|(\\\\))+[\w\d:#@%/;$()~_?\+-=\\\.&]*)";
 
             if (IsEmptyString(str))
-                return true;
+                return false;
 
             str = str.Trim();
 

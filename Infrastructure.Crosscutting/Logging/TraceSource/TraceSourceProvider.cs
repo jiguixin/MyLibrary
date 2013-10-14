@@ -141,7 +141,7 @@ namespace Infrastructure.Crosscutting.Logging.TraceSource
 
                 var exceptionData = exception.ToString(); // The ToString() create a string representation of the current exception
 
-                TraceInternal(TraceEventType.Error, string.Format(CultureInfo.InvariantCulture,"{0} Exception:{1}",traceData,exceptionData));
+                TraceInternal(TraceEventType.Error, string.Format(CultureInfo.InvariantCulture,"错误信息：{0} Exception:{1},行数：{2}",traceData,exceptionData,exception.StackTrace));
             }
         }
 
