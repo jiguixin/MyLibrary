@@ -8,163 +8,228 @@ using Infrastructure.Crosscutting.Declaration;
 
 namespace Infrastructure.Crosscutting.Utility.CommomHelper
 {
-    /// <summary>
-    /// 操作图片类, 生成缩略图,添加水印
-    /// </summary>
-    public static class PicDealHelper
+    /// <summary>  
+    /// 图片水印处理类  
+    /// </summary>  
+    public class ImageWatermark
     {
-        private static Hashtable htmimes = new Hashtable();
-        internal static readonly string AllowExt = ".jpe|.jpeg|.jpg|.png|.tif|.tiff|.bmp";
+        /* 
+  调用很简单 im.SaveWatermark(原图地址, 水印地址, 透明度, 水印位置, 边距,保存位置);  
+  ImageWatermark im = new ImageWatermark(); 
+  im.SaveWatermark(Server.MapPath("/原图.jpg"), Server.MapPath("/水印.jpg"), 0.5f, ImageWatermark.WatermarkPosition.RigthBottom, 10, Server.MapPath("/原图.jpg")); 
+ */
 
-        /// <summary>
-        /// 生成缩略图
-        /// </summary>
-        /// <param name="originalImagePath"></param>
-        /// <param name="width"></param>
-        /// <param name="height"></param>
-        /// <param name="mode"></param>
-        /// <returns></returns>
-        public static bool MakeThumbnail(string originalImagePath, int width, int height, ThumbnailMod mode)
+        #region 变量声明
+
+        /// <summary>  
+        /// 枚举: 水印位置  
+        /// </summary>  
+        public enum WatermarkPosition
         {
-            string filename = originalImagePath.Substring(0, originalImagePath.LastIndexOf('.')) + "s.jpg";
-            Image image = Image.FromFile(originalImagePath);
-            int num = width;
-            int num2 = height;
-            int x = 0;
-            int y = 0;
-            int num3 = image.Width;
-            int num4 = image.Height;
-            switch (mode)
-            {
-                case ThumbnailMod.W:
-                    {
-                        num2 = image.Height * width / image.Width;
-                        break;
-                    }
-                case ThumbnailMod.H:
-                    {
-                        num = image.Width * height / image.Height;
-                        break;
-                    }
-                case ThumbnailMod.Cut:
-                    {
-                        if ((double)image.Width / (double)image.Height > (double)num / (double)num2)
-                        {
-                            num4 = image.Height;
-                            num3 = image.Height * num / num2;
-                            y = 0;
-                            x = (image.Width - num3) / 2;
-                        }
-                        else
-                        {
-                            num3 = image.Width;
-                            num4 = image.Width * height / num;
-                            x = 0;
-                            y = (image.Height - num4) / 2;
-                        }
-                        break;
-                    }
-            }
-            Image image2 = new Bitmap(num, num2);
-            Graphics graphics = Graphics.FromImage(image2);
-            graphics.InterpolationMode = InterpolationMode.High;
-            graphics.SmoothingMode = SmoothingMode.HighQuality;
-            graphics.Clear(Color.Transparent);
-            graphics.DrawImage(image, new Rectangle(0, 0, num, num2), new Rectangle(x, y, num3, num4), GraphicsUnit.Pixel);
-            bool result = false;
-            try
-            {
-                image2.Save(filename, ImageFormat.Jpeg);
-                result = true;
-            }
-            catch (Exception)
-            {
-            }
-            finally
-            {
-                image.Dispose();
-                image2.Dispose();
-                graphics.Dispose();
-            }
-            return result;
+            /// <summary>  
+            /// 左上  
+            /// </summary>  
+            LeftTop,
+
+            /// <summary>  
+            /// 左中  
+            /// </summary>  
+            Left,
+
+            /// <summary>  
+            /// 左下  
+            /// </summary>  
+            LeftBottom,
+
+            /// <summary>  
+            /// 正上  
+            /// </summary>  
+            Top,
+
+            /// <summary>  
+            /// 正中  
+            /// </summary>  
+            Center,
+
+            /// <summary>  
+            /// 正下  
+            /// </summary>  
+            Bottom,
+
+            /// <summary>  
+            /// 右上  
+            /// </summary>  
+            RightTop,
+
+            /// <summary>  
+            /// 右中  
+            /// </summary>  
+            RightCenter,
+
+            /// <summary>  
+            /// 右下  
+            /// </summary>  
+            RigthBottom
         }
 
-        /// <summary>
-        /// 在图片上生成图片水印
-        /// </summary>
-        /// <param name="Path">原服务器图片路径</param>
-        /// <param name="Path_sypf">水印图片路径</param>
-        public static void AddWaterPic(string Path, string Path_sypf)
+        #endregion
+
+        #region 私有函数
+
+        /// <summary>  
+        /// 获取: 图片去扩展名(包含完整路径及其文件名)小写字符串  
+        /// </summary>  
+        /// <param name="path">图片路径(包含完整路径,文件名及其扩展名): string</param>  
+        /// <returns>返回: 图片去扩展名(包含完整路径及其文件名)小写字符串: string</returns>  
+        private string GetFileName(string path)
         {
-            try
+            return path.Remove(path.LastIndexOf('.')).ToLower();
+        }
+
+        /// <summary>  
+        /// 获取: 图片以'.'开头的小写字符串扩展名  
+        /// </summary>  
+        /// <param name="path">图片路径(包含完整路径,文件名及其扩展名): string</param>  
+        /// <returns>返回: 图片以'.'开头的小写字符串扩展名: string</returns>  
+        private string GetExtension(string path)
+        {
+            return path.Remove(0, path.LastIndexOf('.')).ToLower();
+        }
+
+        /// <summary>  
+        /// 获取: 图片以 '.' 开头的小写字符串扩展名对应的 System.Drawing.Imaging.ImageFormat 对象  
+        /// </summary>  
+        /// <param name="format">以 '. '开头的小写字符串扩展名: string</param>  
+        /// <returns>返回: 图片以 '.' 开头的小写字符串扩展名对应的 System.Drawing.Imaging.ImageFormat 对象: System.Drawing.Imaging.ImageFormat</returns>  
+        private ImageFormat GetImageFormat(string format)
+        {
+            switch (format)
             {
-                Image image = Image.FromFile(Path);
-                Image image2 = Image.FromFile(Path_sypf);
-                Graphics graphics = Graphics.FromImage(image);
-                graphics.DrawImage(image2, new Rectangle(image.Width - image2.Width, image.Height - image2.Height, image2.Width, image2.Height), 0, 0, image2.Width, image2.Height, GraphicsUnit.Pixel);
-                graphics.Dispose();
-                image.Save(Path + ".temp");
-                image.Dispose();
-                File.Delete(Path);
-                File.Move(Path + ".temp", Path);
-            }
-            catch
-            {
+                case ".bmp":
+                    return ImageFormat.Bmp;
+                case ".emf":
+                    return ImageFormat.Emf;
+                case ".exif":
+                    return ImageFormat.Exif;
+                case ".gif":
+                    return ImageFormat.Gif;
+                case ".ico":
+                    return ImageFormat.Icon;
+                case ".png":
+                    return ImageFormat.Png;
+                case ".tif":
+                    return ImageFormat.Tiff;
+                case ".tiff":
+                    return ImageFormat.Tiff;
+                case ".wmf":
+                    return ImageFormat.Wmf;
+                default:
+                    return ImageFormat.Jpeg;
             }
         }
 
-        /// <summary>
-        /// 公共方法
-        /// </summary>
-        private static void GetImgType()
+        /// <summary>  
+        /// 获取: 枚举 ImageWatermark.WatermarkPosition 对应的 System.Drawing.Rectangle 对象
+        /// </summary>  
+        /// <param name="positon">枚举 ImageWatermark.WatermarkPosition: ImageWatermark.WatermarkPosition</param>  
+        /// <param name="X">原图宽度: int</param>  
+        /// <param name="Y">原图高度: int</param>  
+        /// <param name="x">水印宽度: int</param>  
+        /// <param name="y">水印高度: int</param>  
+        /// <param name="i">边距: int</param>  
+        /// <returns>返回: 枚举 ImageWatermark.WatermarkPosition 对应的 System.Drawing.Rectangle 对象: System.Drawing.Rectangle</returns>  
+        private Rectangle GetWatermarkRectangle(WatermarkPosition positon, int X, int Y, int x, int y, int i)
         {
-            PicDealHelper.htmimes[".jpe"] = "image/jpeg";
-            PicDealHelper.htmimes[".jpeg"] = "image/jpeg";
-            PicDealHelper.htmimes[".jpg"] = "image/jpeg";
-            PicDealHelper.htmimes[".png"] = "image/png";
-            PicDealHelper.htmimes[".tif"] = "image/tiff";
-            PicDealHelper.htmimes[".tiff"] = "image/tiff";
-            PicDealHelper.htmimes[".bmp"] = "image/bmp";
+            switch (positon)
+            {
+                case WatermarkPosition.LeftTop:
+                    return new Rectangle(i, i, x, y);
+                case WatermarkPosition.Left:
+                    return new Rectangle(i, (Y - y) / 2, x, y);
+                case WatermarkPosition.LeftBottom:
+                    return new Rectangle(i, Y - y - i, x, y);
+                case WatermarkPosition.Top:
+                    return new Rectangle((X - x) / 2, i, x, y);
+                case WatermarkPosition.Center:
+                    return new Rectangle((X - x) / 2, (Y - y) / 2, x, y);
+                case WatermarkPosition.Bottom:
+                    return new Rectangle((X - x) / 2, Y - y - i, x, y);
+                case WatermarkPosition.RightTop:
+                    return new Rectangle(X - x - i, i, x, y);
+                case WatermarkPosition.RightCenter:
+                    return new Rectangle(X - x - i, (Y - y) / 2, x, y);
+                default:
+                    return new Rectangle(X - x - i, Y - y - i, x, y);
+            }
         }
 
-        /// <summary>
-        /// 返回新图片尺寸
-        /// </summary>
-        /// <param name="width">原始宽</param>
-        /// <param name="height">原始高</param>
-        /// <param name="maxWidth">新图片最大宽</param>
-        /// <param name="maxHeight">新图片最大高</param>
-        /// <returns></returns>
-        public static Size ResizeImage(int width, int height, int maxWidth, int maxHeight)
+        #endregion
+
+        #region 设置透明度
+
+        /// <summary>  
+        /// 设置: 图片 System.Drawing.Bitmap 对象透明度  
+        /// </summary>  
+        /// <param name="sBitmap">图片 System.Drawing.Bitmap 对象: System.Drawing.Bitmap</param>  
+        /// <param name="transparence">水印透明度(值越高透明度越低,范围在0.0f~1.0f之间): float</param>  
+        /// <returns>图片 System.Drawing.Bitmap: System.Drawing.Bitmap</returns>  
+        public Bitmap SetTransparence(Bitmap bm, float transparence)
         {
-            decimal num = maxWidth;
-            decimal d = maxHeight;
-            decimal d2 = num / d;
-            decimal d3 = width;
-            decimal num2 = height;
-            int width2;
-            int height2;
-            if (d3 > num || num2 > d)
-            {
-                if (d3 / num2 > d2)
+            if (transparence == 0.0f || transparence == 1.0f) throw new ArgumentException("透明度值只能在0.0f~1.0f之间");
+            float[][] floatArray =
                 {
-                    decimal d4 = d3 / num;
-                    width2 = Convert.ToInt32(d3 / d4);
-                    height2 = Convert.ToInt32(num2 / d4);
-                }
-                else
-                {
-                    decimal d4 = num2 / d;
-                    width2 = Convert.ToInt32(d3 / d4);
-                    height2 = Convert.ToInt32(num2 / d4);
-                }
-            }
-            else
+                    new float[] { 1.0f, 0.0f, 0.0f, 0.0f, 0.0f },
+                    new float[] { 0.0f, 1.0f, 0.0f, 0.0f, 0.0f },
+                    new float[] { 0.0f, 0.0f, 1.0f, 0.0f, 0.0f },
+                    new float[] { 0.0f, 0.0f, 0.0f, transparence, 0.0f },
+                    new float[] { 0.0f, 0.0f, 0.0f, 0.0f, 1.0f }
+                };
+            ImageAttributes imageAttributes = new ImageAttributes();
+            imageAttributes.SetColorMatrix(new ColorMatrix(floatArray), ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
+            Bitmap bitmap = new Bitmap(bm.Width, bm.Height);
+            Graphics graphics = Graphics.FromImage(bitmap);
+            graphics.DrawImage(
+                bm,
+                new Rectangle(0, 0, bm.Width, bm.Height),
+                0,
+                0,
+                bm.Width,
+                bm.Height,
+                GraphicsUnit.Pixel,
+                imageAttributes);
+            graphics.Dispose();
+            imageAttributes.Dispose();
+            bm.Dispose();
+            return bitmap;
+        }
+
+        /// <summary>  
+        ///  设置: 图片 System.Drawing.Bitmap 对象透明度  
+        /// </summary>  
+        /// <param name="readpath">图片路径(包含完整路径,文件名及其扩展名): string</param>  
+        /// <param name="transparence">水印透明度(值越高透明度越低,范围在0.0f~1.0f之间): float</param>  
+        /// <returns>图片 System.Drawing.Bitmap: System.Drawing.Bitmap</returns>  
+        public Bitmap SetTransparence(string readpath, float transparence)
+        {
+            return SetTransparence(new Bitmap(readpath), transparence);
+        }
+
+        #endregion
+
+        #region 公共方法
+
+        /// < summary/>  
+        /// 将byte转换成Image文件   
+        /// < param name="mybyte">byte[]变量</param>    
+        /// < returns></returns>  
+        public Image SetByteToImage(byte[] mybyte)
+        {
+            Image image;
+            using (var mymemorystream = new MemoryStream(mybyte, 0, mybyte.Length))
             {
-                width2 = width;
-                height2 = height;
+                image = Image.FromStream(mymemorystream);
+                return image;
             }
-            return new Size(width2, height2);
         }
 
         /// <summary> 
@@ -172,15 +237,15 @@ namespace Infrastructure.Crosscutting.Utility.CommomHelper
         /// </summary> 
         /// <param name="_URL">URL address to download image</param> 
         /// <returns>Image</returns>
-        public static Image DownloadImage(string _URL)
+        public Image DownloadImage(string _URL)
         {
             Image _tmpImage = null;
-             
+
             try
             {
                 // Open a connection
                 System.Net.HttpWebRequest _HttpWebRequest =
-                    (System.Net.HttpWebRequest) System.Net.HttpWebRequest.Create(_URL);
+                    (System.Net.HttpWebRequest)System.Net.HttpWebRequest.Create(_URL);
 
                 _HttpWebRequest.AllowWriteStreamBuffering = true;
 
@@ -211,12 +276,200 @@ namespace Infrastructure.Crosscutting.Utility.CommomHelper
             {
                 // Error
                 Console.WriteLine("Exception caught in process: {0}", _Exception.ToString());
-                return null; 
+                return null;
             }
 
             return _tmpImage;
         }
 
+        #endregion
+
+        #region 添加水印
+
+        /// <summary>  
+        /// 生成: 原图绘制水印的 System.Drawing.Bitmap 对象  
+        /// </summary>  
+        /// <param name="sBitmap">原图 System.Drawing.Bitmap 对象: System.Drawing.Bitmap</param>  
+        /// <param name="wBitmap">水印 System.Drawing.Bitmap 对象: System.Drawing.Bitmap</param>  
+        /// <param name="position">枚举 ImageWatermark.WatermarkPosition : ImageWatermark.WatermarkPosition</param>  
+        /// <param name="margin">水印边距: int</param>  
+        /// <returns>返回: 原图绘制水印的 System.Drawing.Bitmap 对象 System.Drawing.Bitmap</returns>  
+        public Bitmap CreateWatermark(Bitmap sBitmap, Bitmap wBitmap, WatermarkPosition position, int margin)
+        {
+            Graphics graphics = Graphics.FromImage(sBitmap);
+            graphics.DrawImage(
+                wBitmap,
+                GetWatermarkRectangle(position, sBitmap.Width, sBitmap.Height, wBitmap.Width, wBitmap.Height, margin));
+            graphics.Dispose();
+            wBitmap.Dispose();
+            return sBitmap;
+        }
+
+        /// <summary>
+        /// 添加文字水印
+        /// </summary>
+        /// <param name="sBitmap">源图片</param>
+        /// <param name="text">水印文字</param>
+        /// <param name="position">位置</param>
+        /// <param name="margin">边距</param>
+        /// <returns></returns>
+        public Bitmap CreateWatermark(Bitmap sBitmap, string text, WatermarkPosition position, int margin)
+        {
+            Graphics graphics = Graphics.FromImage(sBitmap);
+
+            graphics.DrawString(
+                text,
+                new Font("arial", 12f, FontStyle.Bold),
+                new SolidBrush(Color.SandyBrown),
+                GetWatermarkRectangle(position, sBitmap.Width, sBitmap.Height, sBitmap.Width / 2, 22, margin));
+
+            graphics.Dispose();
+
+            return sBitmap;
+        }
+
+        #endregion
+
+        #region 保存图片到文件
+
+        #region 普通保存
+
+        /// <summary>  
+        /// 保存: System.Drawing.Bitmap 对象到图片文件  
+        /// </summary>  
+        /// <param name="bitmap">System.Drawing.Bitmap 对象: System.Drawing.Bitmap</param>  
+        /// <param name="writepath">保存路径(包含完整路径,文件名及其扩展名): string</param>  
+        public void Save(Bitmap bitmap, string writepath)
+        {
+            try
+            {
+                bitmap.Save(writepath, GetImageFormat(GetExtension(writepath)));
+                bitmap.Dispose();
+            }
+            catch
+            {
+                throw new ArgumentException("图片保存错误");
+            }
+        }
+
+        /// <summary>  
+        /// 保存: 对象到图片文件  
+        /// </summary>  
+        /// <param name="readpath">原图路径(包含完整路径,文件名及其扩展名): string</param>  
+        /// <param name="writepath">保存路径(包含完整路径,文件名及其扩展名): string</param>  
+        public void Save(string readpath, string writepath)
+        {
+            if (string.Compare(readpath, writepath) == 0) throw new ArgumentException("源图片与目标图片地址相同");
+            try
+            {
+                Save(new Bitmap(readpath), writepath);
+            }
+            catch
+            {
+                throw new ArgumentException("图片读取错误");
+            }
+        }
+
+        #endregion
+
+        #region 透明度调整保存
+
+        /// <summary>  
+        /// 保存: 设置透明度的对象到图片文件  
+        /// </summary>  
+        /// <param name="sBitmap">图片 System.Drawing.Bitmap 对象: System.Drawing.Bitmap</param>  
+        /// <param name="transparence">水印透明度(值越高透明度越低,范围在0.0f~1.0f之间): float</param>  
+        /// <param name="writepath">保存路径(包含完整路径,文件名及其扩展名): string</param>  
+        public void SaveTransparence(Bitmap bitmap, float transparence, string writepath)
+        {
+            Save(SetTransparence(bitmap, transparence), writepath);
+        }
+
+        /// <summary>  
+        /// 保存: 设置透明度的象到图片文件  
+        /// </summary>  
+        /// <param name="readpath">原图路径(包含完整路径,文件名及其扩展名): string</param>  
+        /// <param name="transparence">水印透明度(值越高透明度越低,范围在0.0f~1.0f之间): float</param>  
+        /// <param name="writepath">保存路径(包含完整路径,文件名及其扩展名): string</param>  
+        public void SaveTransparence(string readpath, float transparence, string writepath)
+        {
+            Save(SetTransparence(readpath, transparence), writepath);
+        }
+
+        #endregion
+
+        #region 水印图片保存
+
+        /// <summary>  
+        /// 保存: 绘制水印的对象到图片文件  
+        /// </summary>  
+        /// <param name="sBitmap">原图 System.Drawing.Bitmap 对象: System.Drawing.Bitmap</param>  
+        /// <param name="wBitmap">水印 System.Drawing.Bitmap 对象: System.Drawing.Bitmap</param>  
+        /// <param name="position">枚举 ImageWatermark.WatermarkPosition : ImageWatermark.WatermarkPosition</param>  
+        /// <param name="margin">水印边距: int</param>  
+        /// <param name="writepath">保存路径(包含完整路径,文件名及其扩展名): string</param>  
+        public void SaveWatermark(
+            Bitmap sBitmap,
+            Bitmap wBitmap,
+            WatermarkPosition position,
+            int margin,
+            string writepath)
+        {
+            Save(CreateWatermark(sBitmap, wBitmap, position, margin), writepath);
+        }
+
+        /// <summary>  
+        /// 保存: 绘制水印的对象到图片文件  
+        /// </summary>  
+        /// <param name="readpath">图片路径(包含完整路径,文件名及其扩展名): string</param>  
+        /// <param name="watermarkpath">水印图片路径(包含完整路径,文件名及其扩展名): string</param>  
+        /// <param name="transparence">水印透明度(值越高透明度越低,范围在0.0f~1.0f之间): float</param>  
+        /// <param name="position">枚举 ImageWatermark.WatermarkPosition : ImageWatermark.WatermarkPosition</param>  
+        /// <param name="margin">水印边距: int</param>  
+        /// <param name="writepath">保存路径(包含完整路径,文件名及其扩展名): string</param>  
+        public void SaveWatermark(
+            string readpath,
+            string watermarkpath,
+            float transparence,
+            WatermarkPosition position,
+            int margin,
+            string writepath)
+        {
+            if (string.Compare(readpath, writepath) == 0) throw new ArgumentException("源图片与目标图片地址相同");
+            if (transparence == 0.0f) Save(readpath, writepath);
+            else if (transparence == 1.0f) SaveWatermark(new Bitmap(readpath), new Bitmap(watermarkpath), position, margin, writepath);
+            else
+                SaveWatermark(
+                    new Bitmap(readpath),
+                    SetTransparence(watermarkpath, transparence),
+                    position,
+                    margin,
+                    writepath);
+
+        }
+
+        /// <summary>  
+        /// 保存: 绘制水印的对象到图片文件  
+        /// </summary>  
+        /// <param name="sBitmap">原图 System.Drawing.Bitmap 对象: System.Drawing.Bitmap</param>  
+        /// <param name="text">水印 文字</param>  
+        /// <param name="position">枚举 WatermarkPosition</param>  
+        /// <param name="margin">水印边距: int</param>  
+        /// <param name="writepath">保存路径(包含完整路径,文件名及其扩展名): string</param>  
+        public void SaveWatermarkText(
+            Bitmap sBitmap,
+            string text,
+            WatermarkPosition position,
+            int margin,
+            string writepath)
+        {
+            Save(CreateWatermark(sBitmap, text, position, margin), writepath);
+        }
+
+
+        #endregion
+
+        #endregion
     }
 }
 
