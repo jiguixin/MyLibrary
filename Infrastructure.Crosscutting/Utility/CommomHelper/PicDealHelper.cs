@@ -232,6 +232,30 @@ namespace Infrastructure.Crosscutting.Utility.CommomHelper
             }
         }
 
+        /// <summary>
+        /// 将图片Bitmap转换成Byte[]
+        /// </summary>
+        /// <param name="bitmap">bitmap对象</param>
+        /// <param name="imageFormat">后缀名</param>
+        /// <returns></returns>
+        public byte[] BitmapToBytes(Bitmap bitmap, System.Drawing.Imaging.ImageFormat imageFormat)
+        {
+            if (bitmap == null) { return null; }
+            byte[] data = null;
+            using (MemoryStream ms = new MemoryStream())
+            {
+                using (bitmap)
+                {
+                    bitmap.Save(ms, imageFormat);
+                    ms.Position = 0;
+                    data = new byte[ms.Length];
+                    ms.Read(data, 0, Convert.ToInt32(ms.Length));
+                    ms.Flush();
+                }
+            }
+            return data;
+        }
+
         /// <summary> 
         /// Function to download Image from website 
         /// </summary> 
@@ -321,7 +345,7 @@ namespace Infrastructure.Crosscutting.Utility.CommomHelper
                 text,
                 new Font("arial", 12f, FontStyle.Bold),
                 new SolidBrush(Color.SandyBrown),
-                GetWatermarkRectangle(position, sBitmap.Width, sBitmap.Height, sBitmap.Width / 2, 22, margin));
+                GetWatermarkRectangle(position, sBitmap.Width, sBitmap.Height, (sBitmap.Width * 0.55).ToType<int>(), 22, margin));
 
             graphics.Dispose();
 
