@@ -238,7 +238,7 @@ namespace Infrastructure.Crosscutting.Utility.CommomHelper
         /// <param name="bitmap">bitmap对象</param>
         /// <param name="imageFormat">后缀名</param>
         /// <returns></returns>
-        public byte[] BitmapToBytes(Bitmap bitmap, System.Drawing.Imaging.ImageFormat imageFormat)
+        public byte[] SetBitmapToBytes(Bitmap bitmap, System.Drawing.Imaging.ImageFormat imageFormat)
         {
             if (bitmap == null) { return null; }
             byte[] data = null;
