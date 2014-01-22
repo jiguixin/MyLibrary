@@ -218,43 +218,7 @@ namespace Infrastructure.Crosscutting.Utility.CommomHelper
 
         #region 公共方法
 
-        /// < summary/>  
-        /// 将byte转换成Image文件   
-        /// < param name="mybyte">byte[]变量</param>    
-        /// < returns></returns>  
-        public Image SetByteToImage(byte[] mybyte)
-        {
-            Image image;
-            using (var mymemorystream = new MemoryStream(mybyte, 0, mybyte.Length))
-            {
-                image = Image.FromStream(mymemorystream);
-                return image;
-            }
-        }
-
-        /// <summary>
-        /// 将图片Bitmap转换成Byte[]
-        /// </summary>
-        /// <param name="bitmap">bitmap对象</param>
-        /// <param name="imageFormat">后缀名</param>
-        /// <returns></returns>
-        public byte[] SetBitmapToBytes(Bitmap bitmap, System.Drawing.Imaging.ImageFormat imageFormat)
-        {
-            if (bitmap == null) { return null; }
-            byte[] data = null;
-            using (MemoryStream ms = new MemoryStream())
-            {
-                using (bitmap)
-                {
-                    bitmap.Save(ms, imageFormat);
-                    ms.Position = 0;
-                    data = new byte[ms.Length];
-                    ms.Read(data, 0, Convert.ToInt32(ms.Length));
-                    ms.Flush();
-                }
-            }
-            return data;
-        }
+      
 
         /// <summary> 
         /// Function to download Image from website 
@@ -494,6 +458,47 @@ namespace Infrastructure.Crosscutting.Utility.CommomHelper
         #endregion
 
         #endregion
+    }
+
+    public class ImageHelper
+    {
+        /// < summary/>  
+        /// 将byte转换成Image文件   
+        /// < param name="mybyte">byte[]变量</param>    
+        /// < returns></returns>  
+        public static Image SetByteToImage(byte[] mybyte)
+        {
+            Image image;
+            using (var mymemorystream = new MemoryStream(mybyte, 0, mybyte.Length))
+            {
+                image = Image.FromStream(mymemorystream);
+                return image;
+            }
+        }
+
+        /// <summary>
+        /// 将图片Bitmap转换成Byte[]
+        /// </summary>
+        /// <param name="bitmap">bitmap对象</param>
+        /// <param name="imageFormat">后缀名</param>
+        /// <returns></returns>
+        public static byte[] SetBitmapToBytes(Bitmap bitmap, System.Drawing.Imaging.ImageFormat imageFormat)
+        {
+            if (bitmap == null) { return null; }
+            byte[] data = null;
+            using (MemoryStream ms = new MemoryStream())
+            {
+                using (bitmap)
+                {
+                    bitmap.Save(ms, imageFormat);
+                    ms.Position = 0;
+                    data = new byte[ms.Length];
+                    ms.Read(data, 0, Convert.ToInt32(ms.Length));
+                    ms.Flush();
+                }
+            }
+            return data;
+        }
     }
 }
 

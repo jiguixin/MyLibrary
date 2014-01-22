@@ -202,11 +202,11 @@ namespace Infrastructure.Crosscutting.Utility.CommomHelper
             {
                 if (httpWebResponse.ContentEncoding.ToLower().Contains("gzip"))
                 {
-                    responseStream = new GZipStream(responseStream, 0);
+                    responseStream = new GZipStream(responseStream, (CompressionMode) 0);
                 }
                 if (httpWebResponse.ContentEncoding.ToLower().Contains("deflate"))
                 {
-                    responseStream = new DeflateStream(responseStream, 0);
+                    responseStream = new DeflateStream(responseStream, (CompressionMode) 0);
                 }
 
                 if (responseEncoding != null)

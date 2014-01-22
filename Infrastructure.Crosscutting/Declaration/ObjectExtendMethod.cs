@@ -206,7 +206,7 @@ namespace Infrastructure.Crosscutting.Declaration
         /// </summary>
         /// <param name="Object">The object to check</param>
         /// <returns>False if it is null/DBNull, true otherwise</returns>
-        public static bool IsNotNullOrDbNull(this object Object)
+        public static bool IsNotNullOrDbNull(object Object)
         {
             return Object != null && !Convert.IsDBNull(Object);
         }
@@ -220,7 +220,7 @@ namespace Infrastructure.Crosscutting.Declaration
         /// </summary>
         /// <param name="Object">The object to check</param>
         /// <returns>True if it is null/DBNull, false otherwise</returns>
-        public static bool IsNullOrDbNull(this object Object)
+        public static bool IsNullOrDbNull(object Object)
         {
             return Object == null || Convert.IsDBNull(Object);
         }
@@ -234,9 +234,9 @@ namespace Infrastructure.Crosscutting.Declaration
         /// </summary>
         /// <param name="item">The object to check</param>
         /// <param name="name">Name of the argument</param>
-        public static void ThrowIfNullOrDbNull(this object item, string name)
+        public static void ThrowIfNullOrDbNull(object item, string name)
         {
-            if (item.IsNullOrDbNull())
+            if (ObjectExtendMethod.IsNullOrDbNull(item))
                 throw new ArgumentNullException(name);
         }
 
@@ -265,7 +265,7 @@ namespace Infrastructure.Crosscutting.Declaration
         /// <param name="input">Input object</param>
         /// <param name="format">Format of the output string</param>
         /// <returns>The formatted string</returns>
-        public static string FormatToString(this object input, string format)
+        public static string FormatToString(object input, string format)
         {
             if (input.IsNull())
                 return "";
@@ -1190,7 +1190,7 @@ namespace Infrastructure.Crosscutting.Declaration
         /// <param name="inputVariables">(Optional)input variables for the method</param>
         /// <typeparam name="TReturnType">Return type expected</typeparam>
         /// <returns>The returned value of the method</returns>
-        public static TReturnType CallMethod<TReturnType>(this object Object, string methodName,
+        public static TReturnType CallMethod<TReturnType>(object Object, string methodName,
                                                         params object[] inputVariables)
         {
             if (Object == null)
@@ -1251,7 +1251,7 @@ namespace Infrastructure.Crosscutting.Declaration
         /// <param name="Object">Object to dunp</param>
         /// <param name="htmlOutput">Determines if the output should be HTML or not</param>
         /// <returns>An HTML formatted table containing the information about the object</returns>
-        public static string DumpProperties(this object Object, bool htmlOutput = true)
+        public static string DumpProperties(object Object, bool htmlOutput = true)
         {
             if (Object == null)
                 throw new ArgumentNullException("Object");
@@ -2047,7 +2047,7 @@ namespace Infrastructure.Crosscutting.Declaration
         /// <param name="Object">The object to check</param>
         /// <param name="EqualityComparer">Equality comparer used to determine if the object is equal to default</param>
         /// <returns>False if it is null, true otherwise</returns>
-        public static bool IsNotDefault<T>(this T Object, IEqualityComparer<T> EqualityComparer = null)
+        public static bool IsNotDefault<T>(T Object, IEqualityComparer<T> EqualityComparer = null)
         {
             return !EqualityComparer.NullCheck(new GenericEqualityComparer<T>()).Equals(Object, default(T));
         }
@@ -2063,7 +2063,7 @@ namespace Infrastructure.Crosscutting.Declaration
         /// <param name="Object">The object to check</param>
         /// <param name="EqualityComparer">Equality comparer used to determine if the object is equal to default</param>
         /// <returns>True if it is null, false otherwise</returns>
-        public static bool IsDefault<T>(this T Object, IEqualityComparer<T> EqualityComparer = null)
+        public static bool IsDefault<T>(T Object, IEqualityComparer<T> EqualityComparer = null)
         {
             return EqualityComparer.NullCheck(new GenericEqualityComparer<T>()).Equals(Object, default(T));
         }
@@ -2078,9 +2078,9 @@ namespace Infrastructure.Crosscutting.Declaration
         /// <param name="Item">The object to check</param>
         /// <param name="EqualityComparer">Equality comparer used to determine if the object is equal to default</param>
         /// <param name="Name">Name of the argument</param>
-        public static void ThrowIfDefault<T>(this T Item, string Name, IEqualityComparer<T> EqualityComparer = null)
+        public static void ThrowIfDefault<T>(T Item, string Name, IEqualityComparer<T> EqualityComparer = null)
         {
-            if (Item.IsDefault(EqualityComparer))
+            if (ObjectExtendMethod.IsDefault(Item,EqualityComparer))
                 throw new ArgumentNullException(Name);
         }
 
